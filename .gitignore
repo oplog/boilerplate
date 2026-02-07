@@ -23,6 +23,7 @@ Thumbs.db
 .env
 .env.*
 !.dev.vars.example
+!.env.example
 
 # Logs
 *.log

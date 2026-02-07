@@ -15,6 +15,7 @@
   "dependencies": {
     "@hono/zod-validator": "^0.7.0",
     "@hookform/resolvers": "^5.2.2",
+    "@kinde-oss/kinde-auth-react": "^5.10.1",
     "@radix-ui/react-direction": "^1.1.1",
     "@tanstack/react-query": "^5.90.0",
     "@tanstack/react-table": "^8.21.3",

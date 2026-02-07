@@ -1,6 +1,6 @@
-// Sidebar bileşeni - shadcn/ui Sidebar pattern
-// Dashboard-01 block'undan esinlenildi
+// Sidebar bileşeni - shadcn/ui Sidebar pattern (sidebar-07)
 // Collapsible: icon modunda daraltılabilir, mobilde Sheet olarak açılır
+// NavUser: sidebar-07 nav-user pattern ile kullanıcı menüsü
 
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -9,10 +9,6 @@ import {
   Table,
   BarChart3,
   Grid3x3,
-  ChevronUp,
-  Moon,
-  Sun,
-  Monitor,
 } from "lucide-react";
 import {
   Sidebar,
@@ -27,13 +23,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useTheme } from "@/components/theme-provider";
+import { NavUser } from "@/components/nav-user";
 
 // ─── Navigasyon menü öğeleri ─────────────────────────────────
 const mainNav = [
@@ -49,10 +39,6 @@ const exampleNav = [
 
 export function AppSidebar() {
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
-
-  const themeIcon = theme === "dark" ? Moon : theme === "light" ? Sun : Monitor;
-  const themeLabel = theme === "dark" ? "Koyu" : theme === "light" ? "Açık" : "Sistem";
 
   return (
     <Sidebar collapsible="icon" variant="sidebar">
@@ -126,38 +112,9 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      {/* ─── Alt kısım (Tema) ──────────────────────── */}
+      {/* ─── Kullanıcı menüsü ─────────────────────── */}
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton tooltip="Tema değiştir">
-                  <themeIcon />
-                  <span>Tema: {themeLabel}</span>
-                  <ChevronUp className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                className="w-[--radix-popper-anchor-width]"
-              >
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                  <Sun className="mr-2 h-4 w-4" />
-                  Açık
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                  <Moon className="mr-2 h-4 w-4" />
-                  Koyu
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                  <Monitor className="mr-2 h-4 w-4" />
-                  Sistem
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <NavUser />
       </SidebarFooter>
 
       <SidebarRail />

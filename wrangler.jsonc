@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "oplog-app",
+  "main": "./src/worker/index.ts",
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // D1 veritabanı gerekiyorsa:
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "oplog-app-db",
+  //     "database_id": "<ID>"
+  //   }
+  // ]
+  //
+  // KV store gerekiyorsa:
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "KV",
+  //     "id": "<ID>"
+  //   }
+  // ]
+}

@@ -1,0 +1,9 @@
+# Cloudflare Workers Environment Variables
+# Bu dosyayı .dev.vars olarak kopyala ve kendi değerlerini gir
+# ASLA .dev.vars dosyasını commit etme!
+
+# Örnek API anahtarı
+# API_KEY=your-api-key-here
+
+# Örnek secret
+# AUTH_SECRET=your-secret-here

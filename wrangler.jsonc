@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "oplog-app",
+  "name": "nexus-boilerplate",
+  "account_id": "a7399df770e8fc3f1d8db985f6fa449c",
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -8,6 +9,7 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
+  "workers_dev": true,
   "observability": {
     "enabled": true
   }

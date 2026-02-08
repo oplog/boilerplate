@@ -439,7 +439,7 @@ export function ChartExamplePage() {
                 <RadialBarChart data={kpiData} startAngle={-90} endAngle={270} innerRadius={30} outerRadius={110}>
                   <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="kpi" />} />
                   <RadialBar dataKey="value" background cornerRadius={10} />
-                  <ChartLegend content={<ChartLegendContent nameKey="kpi" />} className="flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center" />
+                  <ChartLegend content={<ChartLegendContent nameKey="kpi" />} className="flex-wrap gap-x-4 gap-y-1 [&>*]:basis-[calc(50%-0.5rem)] [&>*]:justify-center" />
                 </RadialBarChart>
               </ChartContainer>
             </CardContent>

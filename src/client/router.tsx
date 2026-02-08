@@ -13,6 +13,7 @@ import { ChartExamplePage } from "@/pages/examples/chart-example";
 import { DataGridExamplePage } from "@/pages/examples/datagrid-example";
 import { SidebarExamplePage } from "@/pages/examples/sidebar-example";
 import { SidebarPreviewPage } from "@/pages/examples/sidebar-preview";
+import { StatsExamplePage } from "@/pages/examples/stats-example";
 
 // Örnek sayfalar — hem ana layout hem sidebar preview'da kullanılır
 const exampleRoutes = [
@@ -20,6 +21,7 @@ const exampleRoutes = [
   { path: "examples/table", element: <TableExamplePage /> },
   { path: "examples/chart", element: <ChartExamplePage /> },
   { path: "examples/datagrid", element: <DataGridExamplePage /> },
+  { path: "examples/stats", element: <StatsExamplePage /> },
 ];
 
 export const router = createBrowserRouter([

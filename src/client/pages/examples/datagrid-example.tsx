@@ -18,6 +18,7 @@ import {
   MessageCard,
   MessageCardHeading,
   MessageCardParagraph,
+  MessageCardAction,
 } from "@/components/ui/message-card";
 
 // ═══════════════════════════════════════════════════════════════
@@ -325,73 +326,77 @@ function FinancialDataGridContent() {
       {/* Format Referans Kartları — Tablodaki formatlama örnekleri */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MessageCard>
-          <MessageCardHeading>Muhasebe Formatı</MessageCardHeading>
-          <MessageCardParagraph>Gelir, Gider, Kâr/Zarar kolonları</MessageCardParagraph>
-          <div className="space-y-1.5 mt-1">
+          <MessageCardHeading className="text-xl">Muhasebe Formatı</MessageCardHeading>
+          <MessageCardParagraph className="text-base">Gelir, Gider, Kâr/Zarar kolonları</MessageCardParagraph>
+          <div className="space-y-2 mt-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Pozitif</span>
-              <span className="tabular-nums text-sm font-medium text-foreground">$4,003,000.56</span>
+              <span className="text-sm text-muted-foreground">Pozitif</span>
+              <span className="tabular-nums text-lg font-semibold text-foreground">$4,003,000.56</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Negatif</span>
-              <span className="tabular-nums text-sm font-medium text-red-600 dark:text-red-400">($71,501.98)</span>
+              <span className="text-sm text-muted-foreground">Negatif</span>
+              <span className="tabular-nums text-lg font-semibold text-red-600 dark:text-red-400">($71,501.98)</span>
             </div>
           </div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
 
         <MessageCard>
-          <MessageCardHeading>Sayısal Format</MessageCardHeading>
-          <MessageCardParagraph>Sipariş ve Ort. Sipariş kolonları</MessageCardParagraph>
-          <div className="space-y-1.5 mt-1">
+          <MessageCardHeading className="text-xl">Sayısal Format</MessageCardHeading>
+          <MessageCardParagraph className="text-base">Sipariş ve Ort. Sipariş kolonları</MessageCardParagraph>
+          <div className="space-y-2 mt-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Sipariş</span>
-              <span className="tabular-nums text-sm font-medium">12,450</span>
+              <span className="text-sm text-muted-foreground">Sipariş</span>
+              <span className="tabular-nums text-lg font-semibold">12,450</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Ort. Sipariş</span>
-              <span className="tabular-nums text-sm font-medium">₺321.53</span>
+              <span className="text-sm text-muted-foreground">Ort. Sipariş</span>
+              <span className="tabular-nums text-lg font-semibold">₺321.53</span>
             </div>
           </div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
 
         <MessageCard>
-          <MessageCardHeading>Yüzde / Marj</MessageCardHeading>
-          <MessageCardParagraph>Marj (%) kolonu</MessageCardParagraph>
-          <div className="space-y-1.5 mt-1">
+          <MessageCardHeading className="text-xl">Yüzde / Marj</MessageCardHeading>
+          <MessageCardParagraph className="text-base">Marj (%) kolonu</MessageCardParagraph>
+          <div className="space-y-2 mt-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Pozitif</span>
-              <span className="tabular-nums text-sm font-medium text-emerald-600 dark:text-emerald-400">%28.8</span>
+              <span className="text-sm text-muted-foreground">Pozitif</span>
+              <span className="tabular-nums text-lg font-semibold text-emerald-600 dark:text-emerald-400">%28.8</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Negatif</span>
-              <span className="tabular-nums text-sm font-medium text-red-600 dark:text-red-400">(%4.6)</span>
+              <span className="text-sm text-muted-foreground">Negatif</span>
+              <span className="tabular-nums text-lg font-semibold text-red-600 dark:text-red-400">(%4.6)</span>
             </div>
           </div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
 
         <MessageCard>
-          <MessageCardHeading>Değişim Göstergesi</MessageCardHeading>
-          <MessageCardParagraph>Aylık Değişim (%) kolonu</MessageCardParagraph>
-          <div className="space-y-1.5 mt-1">
+          <MessageCardHeading className="text-xl">Değişim Göstergesi</MessageCardHeading>
+          <MessageCardParagraph className="text-base">Aylık Değişim (%) kolonu</MessageCardParagraph>
+          <div className="space-y-2 mt-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Artış</span>
-              <span className="flex items-center gap-1 tabular-nums text-sm font-medium text-emerald-600 dark:text-emerald-400">
-                <TrendingUp className="h-3.5 w-3.5" /> +12.4%
+              <span className="text-sm text-muted-foreground">Artış</span>
+              <span className="flex items-center gap-1.5 tabular-nums text-lg font-semibold text-emerald-600 dark:text-emerald-400">
+                <TrendingUp className="h-4 w-4" /> +12.4%
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Düşüş</span>
-              <span className="flex items-center gap-1 tabular-nums text-sm font-medium text-red-600 dark:text-red-400">
-                <TrendingDown className="h-3.5 w-3.5" /> -8.1%
+              <span className="text-sm text-muted-foreground">Düşüş</span>
+              <span className="flex items-center gap-1.5 tabular-nums text-lg font-semibold text-red-600 dark:text-red-400">
+                <TrendingDown className="h-4 w-4" /> -8.1%
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">Sabit</span>
-              <span className="flex items-center gap-1 tabular-nums text-sm font-medium text-muted-foreground">
-                <Minus className="h-3.5 w-3.5" /> 0.0%
+              <span className="text-sm text-muted-foreground">Sabit</span>
+              <span className="flex items-center gap-1.5 tabular-nums text-lg font-semibold text-muted-foreground">
+                <Minus className="h-4 w-4" /> 0.0%
               </span>
             </div>
           </div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
       </div>
 

@@ -1,4 +1,4 @@
-import { MessageCard, MessageCardAction } from "@/components/ui/message-card";
+import { MessageCard } from "@/components/ui/message-card";
 import { cn } from "@/lib/utils";
 
 const data = [
@@ -22,7 +22,7 @@ export default function Stats05() {
             </span>
           </div>
           <span className="tabular-nums text-3xl font-semibold text-foreground">{item.value}</span>
-          <MessageCardAction variant="link" className="mt-0 p-0 h-auto text-sm">Detayları gör &rarr;</MessageCardAction>
+          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Detayları gör &rarr;</a>
         </MessageCard>
       ))}
     </div>

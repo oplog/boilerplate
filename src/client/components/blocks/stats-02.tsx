@@ -16,7 +16,7 @@ export default function Stats02() {
         <MessageCard key={item.metric}>
           <span className="text-base font-normal text-muted-foreground">{item.metric}</span>
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="tabular-nums text-2xl font-semibold text-primary">{item.current}</span>
+            <span className="tabular-nums text-2xl font-semibold text-foreground">{item.current}</span>
             <span className="tabular-nums text-sm font-medium text-muted-foreground">önceki: {item.previous}</span>
           </div>
           <Badge

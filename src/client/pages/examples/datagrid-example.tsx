@@ -323,123 +323,44 @@ function FinancialDataGridContent() {
 
   return (
     <>
-      {/* Format Referans Kartları — üstte */}
+      {/* Format Referans Kartları — MessageCard ile */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Muhasebe Formatı</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm font-mono tabular-nums">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Pozitif:</span>
-              <span>$4,003,000.56</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Negatif:</span>
-              <span className="text-red-600 dark:text-red-400">($50,000.00)</span>
-            </div>
-            <p className="text-xs text-muted-foreground pt-2 font-sans">
-              Negatifler parantez + kırmızı renk. Sağa yaslı, mono font.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Sayısal Format</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm font-mono tabular-nums">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Büyük:</span>
-              <span>12,450</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Küçük:</span>
-              <span>102</span>
-            </div>
-            <p className="text-xs text-muted-foreground pt-2 font-sans">
-              Binlik ayırıcı virgül. Sağa yaslı, mono font.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Yüzde / Marj</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm font-mono tabular-nums">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Pozitif:</span>
-              <span className="text-emerald-600 dark:text-emerald-400">%28.8</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Negatif:</span>
-              <span className="text-red-600 dark:text-red-400">(%4.6)</span>
-            </div>
-            <p className="text-xs text-muted-foreground pt-2 font-sans">
-              Yeşil pozitif, kırmızı negatif. Negatifler parantez içinde.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle>Değişim Göstergesi</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm font-mono tabular-nums">
-            <div className="flex justify-between items-center">
-              <span className="text-muted-foreground">Artış:</span>
-              <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                <TrendingUp className="h-3.5 w-3.5" /> +12.4%
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-muted-foreground">Düşüş:</span>
-              <span className="flex items-center gap-1 text-red-600 dark:text-red-400">
-                <TrendingDown className="h-3.5 w-3.5" /> -8.1%
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground pt-2 font-sans">
-              Ok ikonu + renk kodu ile trend gösterimi.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* MessageCard Örnekleri */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <MessageCard
-          imageSrc="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80"
-          imageAlt="Depo operasyonu"
-        >
-          <MessageCardHeading>Depo Optimizasyonu</MessageCardHeading>
-          <MessageCardParagraph>
-            İstanbul-1 deposunda kapasite kullanımı %92'ye ulaştı. Yeni raf düzeni ile %15 verimlilik artışı hedefleniyor.
+        <MessageCard backgroundColor="var(--color-chart-1)" className="text-white dark:text-white [&_*]:text-white">
+          <MessageCardHeading>Muhasebe Formatı</MessageCardHeading>
+          <MessageCardParagraph className="text-white/80">
+            Negatifler parantez + kırmızı renk ile gösterilir. Mono font, sağa yaslı.
           </MessageCardParagraph>
-          <MessageCardAction>Detayları Gör</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold">$4,003,000.56</div>
+          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard
-          imageSrc="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80"
-          imageAlt="Kargo teslimat"
-        >
-          <MessageCardHeading>Teslimat Performansı</MessageCardHeading>
-          <MessageCardParagraph>
-            Zamanında teslimat oranı bu ay %94.2 ile tüm zamanların en yüksek seviyesine ulaştı.
+        <MessageCard backgroundColor="var(--color-chart-2)" className="text-white dark:text-white [&_*]:text-white">
+          <MessageCardHeading>Sayısal Format</MessageCardHeading>
+          <MessageCardParagraph className="text-white/80">
+            Binlik ayırıcı virgül. Sağa yaslı, mono font ile okunabilir gösterim.
           </MessageCardParagraph>
-          <MessageCardAction variant="outline">Raporu İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold">12,450</div>
+          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard
-          layout="trailing"
-          imageSrc="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
-          imageAlt="Analitik dashboard"
-        >
-          <MessageCardHeading>Q1 Raporu Hazır</MessageCardHeading>
-          <MessageCardParagraph>
-            2026 Q1 finansal raporu onayınızı bekliyor. Toplam gelir hedefin %108'ine ulaştı.
+        <MessageCard backgroundColor="var(--color-chart-3)" className="text-white dark:text-white [&_*]:text-white">
+          <MessageCardHeading>Yüzde / Marj</MessageCardHeading>
+          <MessageCardParagraph className="text-white/80">
+            Yeşil pozitif, kırmızı negatif. Negatifler parantez içinde gösterilir.
           </MessageCardParagraph>
-          <MessageCardAction>Onayla</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold">%28.8</div>
+          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
+        </MessageCard>
+
+        <MessageCard backgroundColor="var(--color-chart-4)" className="text-white dark:text-white [&_*]:text-white">
+          <MessageCardHeading>Değişim Göstergesi</MessageCardHeading>
+          <MessageCardParagraph className="text-white/80">
+            Ok ikonu + renk kodu ile trend gösterimi. Artış ve düşüş ayrımı.
+          </MessageCardParagraph>
+          <div className="flex items-center gap-2 text-2xl font-bold font-mono">
+            <TrendingUp className="h-5 w-5" /> +12.4%
+          </div>
+          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
         </MessageCard>
       </div>
 

@@ -5,7 +5,7 @@
 
 import { DirectionProvider } from "@radix-ui/react-direction";
 import * as React from "react";
-import type { ColumnDef, CellContext } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { DataGrid } from "@/components/data-grid/data-grid";
 import { useDataGrid } from "@/hooks/use-data-grid";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -44,70 +44,66 @@ function formatCurrency(value: number): string {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// CUSTOM CELL RENDERERS — Finansal kolonlar için renk + format
+// FORMAT FONKSİYONLARI — number variant'ın format prop'u için
+// Display modunda renkli format, tıklayınca düz sayı edit
 // ═══════════════════════════════════════════════════════════════
 
-/** Muhasebe hücresi — negatifler parantezli ve kırmızı */
-function AccountingCell({ getValue }: CellContext<FinancialRecord, unknown>) {
-  const value = getValue() as number;
+/** Muhasebe formatı — negatifler parantezli ve kırmızı */
+function formatAccountingNode(value: number): React.ReactNode {
   const isNeg = value < 0;
   return (
-    <div className={cn(
-      "text-right font-mono text-sm tabular-nums",
+    <span className={cn(
+      "text-right font-mono text-sm tabular-nums block",
       isNeg ? "text-red-600 dark:text-red-400" : "text-foreground"
     )}>
       {formatAccounting(value)}
-    </div>
+    </span>
   );
 }
 
-/** Sayısal hücre — sağa yaslı, mono font, virgüllü */
-function NumericCell({ getValue }: CellContext<FinancialRecord, unknown>) {
-  const value = getValue() as number;
+/** Sayısal — sağa yaslı, mono font, virgüllü */
+function formatNumericNode(value: number): React.ReactNode {
   return (
-    <div className="text-right font-mono text-sm tabular-nums">
+    <span className="text-right font-mono text-sm tabular-nums block">
       {formatNumeric(value)}
-    </div>
+    </span>
   );
 }
 
-/** Para birimi hücresi — ₺ ile, negatifler kırmızı */
-function CurrencyCell({ getValue }: CellContext<FinancialRecord, unknown>) {
-  const value = getValue() as number;
+/** Para birimi — ₺ ile, negatifler kırmızı */
+function formatCurrencyNode(value: number): React.ReactNode {
   const isNeg = value < 0;
   return (
-    <div className={cn(
-      "text-right font-mono text-sm tabular-nums",
+    <span className={cn(
+      "text-right font-mono text-sm tabular-nums block",
       isNeg ? "text-red-600 dark:text-red-400" : "text-foreground"
     )}>
       {isNeg ? `-₺${formatCurrency(Math.abs(value))}` : `₺${formatCurrency(value)}`}
-    </div>
+    </span>
   );
 }
 
-/** Marj/Yüzde hücresi — yeşil pozitif, kırmızı negatif */
-function MarginCell({ getValue }: CellContext<FinancialRecord, unknown>) {
-  const value = getValue() as number;
+/** Marj/Yüzde — yeşil pozitif, kırmızı negatif */
+function formatMarginNode(value: number): React.ReactNode {
   const isNeg = value < 0;
   const isZero = value === 0;
   return (
-    <div className={cn(
-      "text-right font-mono text-sm tabular-nums",
+    <span className={cn(
+      "text-right font-mono text-sm tabular-nums block",
       isNeg ? "text-red-600 dark:text-red-400" : isZero ? "text-muted-foreground" : "text-emerald-600 dark:text-emerald-400"
     )}>
       {value >= 0 ? `%${value.toFixed(1)}` : `(%${Math.abs(value).toFixed(1)})`}
-    </div>
+    </span>
   );
 }
 
 /** Değişim göstergesi — ok ikonu ile yeşil/kırmızı */
-function ChangeCell({ getValue }: CellContext<FinancialRecord, unknown>) {
-  const value = getValue() as number;
+function formatChangeNode(value: number): React.ReactNode {
   const isNeg = value < 0;
   const isZero = value === 0;
 
   return (
-    <div className={cn(
+    <span className={cn(
       "flex items-center justify-end gap-1 font-mono text-sm tabular-nums",
       isNeg
         ? "text-red-600 dark:text-red-400"
@@ -123,7 +119,7 @@ function ChangeCell({ getValue }: CellContext<FinancialRecord, unknown>) {
         <TrendingUp className="h-3.5 w-3.5" />
       )}
       <span>{isNeg ? "" : "+"}{value.toFixed(1)}%</span>
-    </div>
+    </span>
   );
 }
 
@@ -209,58 +205,58 @@ const financialColumns: ColumnDef<FinancialRecord, unknown>[] = [
   {
     id: "revenue",
     accessorKey: "revenue",
-    header: () => <div className="text-right">Gelir ($)</div>,
-    cell: AccountingCell,
+    header: "Gelir ($)",
     size: 170,
     minSize: 140,
+    meta: { cell: { variant: "number" as const, min: 0, step: 0.01, format: formatAccountingNode } },
   },
   {
     id: "cost",
     accessorKey: "cost",
-    header: () => <div className="text-right">Gider ($)</div>,
-    cell: AccountingCell,
+    header: "Gider ($)",
     size: 170,
     minSize: 140,
+    meta: { cell: { variant: "number" as const, min: 0, step: 0.01, format: formatAccountingNode } },
   },
   {
     id: "profit",
     accessorKey: "profit",
-    header: () => <div className="text-right">Kâr/Zarar ($)</div>,
-    cell: AccountingCell,
+    header: "Kâr/Zarar ($)",
     size: 170,
     minSize: 140,
+    meta: { cell: { variant: "number" as const, step: 0.01, format: formatAccountingNode } },
   },
   {
     id: "margin",
     accessorKey: "margin",
-    header: () => <div className="text-right">Marj</div>,
-    cell: MarginCell,
+    header: "Marj (%)",
     size: 110,
     minSize: 90,
+    meta: { cell: { variant: "number" as const, min: -100, max: 100, step: 0.1, format: formatMarginNode } },
   },
   {
     id: "orders",
     accessorKey: "orders",
-    header: () => <div className="text-right">Sipariş</div>,
-    cell: NumericCell,
+    header: "Sipariş",
     size: 110,
     minSize: 90,
+    meta: { cell: { variant: "number" as const, min: 0, step: 1, format: formatNumericNode } },
   },
   {
     id: "avgOrderValue",
     accessorKey: "avgOrderValue",
-    header: () => <div className="text-right">Ort. Sipariş (₺)</div>,
-    cell: CurrencyCell,
+    header: "Ort. Sipariş (₺)",
     size: 150,
     minSize: 120,
+    meta: { cell: { variant: "number" as const, min: 0, step: 0.01, format: formatCurrencyNode } },
   },
   {
     id: "change",
     accessorKey: "change",
-    header: () => <div className="text-right">Aylık Değişim</div>,
-    cell: ChangeCell,
-    size: 140,
+    header: "Aylık Değişim (%)",
+    size: 150,
     minSize: 120,
+    meta: { cell: { variant: "number" as const, step: 0.1, format: formatChangeNode } },
   },
   {
     id: "note",

@@ -423,6 +423,7 @@ export function NumberCell<TData>({
   const min = numberCellOpts?.min;
   const max = numberCellOpts?.max;
   const step = numberCellOpts?.step;
+  const format = numberCellOpts?.format;
 
   const prevIsEditingRef = React.useRef(isEditing);
 
@@ -522,6 +523,8 @@ export function NumberCell<TData>({
           onBlur={onBlur}
           onChange={onChange}
         />
+      ) : format && initialValue != null ? (
+        <span data-slot="grid-cell-content">{format(initialValue)}</span>
       ) : (
         <span data-slot="grid-cell-content">{value}</span>
       )}

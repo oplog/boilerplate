@@ -23,6 +23,8 @@ export type CellOpts =
       min?: number;
       max?: number;
       step?: number;
+      /** Display modunda sayıyı formatlı gösterir (JSX destekler). Edit modunda ham sayı gösterilir. */
+      format?: (value: number) => React.ReactNode;
     }
   | {
       variant: "select";

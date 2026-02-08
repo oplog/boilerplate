@@ -325,42 +325,42 @@ function FinancialDataGridContent() {
     <>
       {/* Format Referans Kartları — MessageCard ile */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MessageCard backgroundColor="var(--color-chart-1)" className="text-white dark:text-white [&_*]:text-white">
+        <MessageCard className="bg-card">
           <MessageCardHeading>Muhasebe Formatı</MessageCardHeading>
-          <MessageCardParagraph className="text-white/80">
+          <MessageCardParagraph>
             Negatifler parantez + kırmızı renk ile gösterilir. Mono font, sağa yaslı.
           </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold">$4,003,000.56</div>
-          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold text-foreground">$4,003,000.56</div>
+          <MessageCardAction variant="outline">Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard backgroundColor="var(--color-chart-2)" className="text-white dark:text-white [&_*]:text-white">
+        <MessageCard className="bg-card">
           <MessageCardHeading>Sayısal Format</MessageCardHeading>
-          <MessageCardParagraph className="text-white/80">
+          <MessageCardParagraph>
             Binlik ayırıcı virgül. Sağa yaslı, mono font ile okunabilir gösterim.
           </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold">12,450</div>
-          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold text-foreground">12,450</div>
+          <MessageCardAction variant="outline">Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard backgroundColor="var(--color-chart-3)" className="text-white dark:text-white [&_*]:text-white">
+        <MessageCard className="bg-card">
           <MessageCardHeading>Yüzde / Marj</MessageCardHeading>
-          <MessageCardParagraph className="text-white/80">
+          <MessageCardParagraph>
             Yeşil pozitif, kırmızı negatif. Negatifler parantez içinde gösterilir.
           </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold">%28.8</div>
-          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold text-emerald-600 dark:text-emerald-400">%28.8</div>
+          <MessageCardAction variant="outline">Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard backgroundColor="var(--color-chart-4)" className="text-white dark:text-white [&_*]:text-white">
+        <MessageCard className="bg-card">
           <MessageCardHeading>Değişim Göstergesi</MessageCardHeading>
-          <MessageCardParagraph className="text-white/80">
+          <MessageCardParagraph>
             Ok ikonu + renk kodu ile trend gösterimi. Artış ve düşüş ayrımı.
           </MessageCardParagraph>
-          <div className="flex items-center gap-2 text-2xl font-bold font-mono">
+          <div className="flex items-center gap-2 text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400">
             <TrendingUp className="h-5 w-5" /> +12.4%
           </div>
-          <MessageCardAction variant="secondary" className="bg-white/20 text-white border-0 hover:bg-white/30">Formatı İncele</MessageCardAction>
+          <MessageCardAction variant="outline">Formatı İncele</MessageCardAction>
         </MessageCard>
       </div>
 

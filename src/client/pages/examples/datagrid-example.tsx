@@ -14,6 +14,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { PageHeader } from "@/components/shared/page-header";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  MessageCard,
+  MessageCardHeading,
+  MessageCardParagraph,
+  MessageCardAction,
+} from "@/components/ui/message-card";
 
 // ═══════════════════════════════════════════════════════════════
 // FORMATLAMA YARDIMCILARI
@@ -398,6 +404,43 @@ function FinancialDataGridContent() {
             </p>
           </CardContent>
         </Card>
+      </div>
+
+      {/* MessageCard Örnekleri */}
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <MessageCard
+          imageSrc="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80"
+          imageAlt="Depo operasyonu"
+        >
+          <MessageCardHeading>Depo Optimizasyonu</MessageCardHeading>
+          <MessageCardParagraph>
+            İstanbul-1 deposunda kapasite kullanımı %92'ye ulaştı. Yeni raf düzeni ile %15 verimlilik artışı hedefleniyor.
+          </MessageCardParagraph>
+          <MessageCardAction>Detayları Gör</MessageCardAction>
+        </MessageCard>
+
+        <MessageCard
+          imageSrc="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=800&q=80"
+          imageAlt="Kargo teslimat"
+        >
+          <MessageCardHeading>Teslimat Performansı</MessageCardHeading>
+          <MessageCardParagraph>
+            Zamanında teslimat oranı bu ay %94.2 ile tüm zamanların en yüksek seviyesine ulaştı.
+          </MessageCardParagraph>
+          <MessageCardAction variant="outline">Raporu İncele</MessageCardAction>
+        </MessageCard>
+
+        <MessageCard
+          layout="trailing"
+          imageSrc="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+          imageAlt="Analitik dashboard"
+        >
+          <MessageCardHeading>Q1 Raporu Hazır</MessageCardHeading>
+          <MessageCardParagraph>
+            2026 Q1 finansal raporu onayınızı bekliyor. Toplam gelir hedefin %108'ine ulaştı.
+          </MessageCardParagraph>
+          <MessageCardAction>Onayla</MessageCardAction>
+        </MessageCard>
       </div>
 
       {/* Özet Badge'leri */}

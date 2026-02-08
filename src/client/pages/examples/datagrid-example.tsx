@@ -338,7 +338,7 @@ function FinancialDataGridContent() {
               <span className="tabular-nums text-lg font-semibold text-red-600 dark:text-red-400">($71,501.98)</span>
             </div>
           </div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardAction className="mt-auto">Formatı İncele</MessageCardAction>
         </MessageCard>
 
         <MessageCard>
@@ -354,7 +354,7 @@ function FinancialDataGridContent() {
               <span className="tabular-nums text-lg font-semibold">₺321.53</span>
             </div>
           </div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardAction className="mt-auto">Formatı İncele</MessageCardAction>
         </MessageCard>
 
         <MessageCard>
@@ -370,7 +370,7 @@ function FinancialDataGridContent() {
               <span className="tabular-nums text-lg font-semibold text-red-600 dark:text-red-400">(%4.6)</span>
             </div>
           </div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardAction className="mt-auto">Formatı İncele</MessageCardAction>
         </MessageCard>
 
         <MessageCard>
@@ -396,7 +396,7 @@ function FinancialDataGridContent() {
               </span>
             </div>
           </div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardAction className="mt-auto">Formatı İncele</MessageCardAction>
         </MessageCard>
       </div>
 

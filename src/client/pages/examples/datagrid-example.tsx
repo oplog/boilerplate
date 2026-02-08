@@ -321,7 +321,7 @@ function FinancialDataGridContent() {
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Muhasebe Formatı</CardTitle>
+            <CardTitle>Muhasebe Formatı</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm font-mono tabular-nums">
             <div className="flex justify-between">
@@ -340,7 +340,7 @@ function FinancialDataGridContent() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Sayısal Format</CardTitle>
+            <CardTitle>Sayısal Format</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm font-mono tabular-nums">
             <div className="flex justify-between">
@@ -359,7 +359,7 @@ function FinancialDataGridContent() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Yüzde / Marj</CardTitle>
+            <CardTitle>Yüzde / Marj</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm font-mono tabular-nums">
             <div className="flex justify-between">
@@ -378,7 +378,7 @@ function FinancialDataGridContent() {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Değişim Göstergesi</CardTitle>
+            <CardTitle>Değişim Göstergesi</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm font-mono tabular-nums">
             <div className="flex justify-between items-center">

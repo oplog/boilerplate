@@ -3,7 +3,7 @@
 // NavUser: sidebar-07 nav-user pattern ile kullanıcı menüsü
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, FileText, Table, BarChart3, Grid3x3 } from "lucide-react";
+import { Home, FileText, Table, BarChart3, Grid3x3, PanelLeft } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -27,6 +27,7 @@ const exampleNav = [
   { name: "Tablo Örneği", href: "/examples/table", icon: Table },
   { name: "Grafik Örneği", href: "/examples/chart", icon: BarChart3 },
   { name: "DataGrid Örneği", href: "/examples/datagrid", icon: Grid3x3 },
+  { name: "Sidebar Örnekleri", href: "/examples/sidebar", icon: PanelLeft },
 ];
 
 export function AppSidebar() {

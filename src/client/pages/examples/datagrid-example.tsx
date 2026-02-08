@@ -16,340 +16,8 @@ import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // ═══════════════════════════════════════════════════════════════
-// BÖLÜM 1: Sevkiyat Takip DataGrid (Düzenlenebilir)
+// FORMATLAMA YARDIMCILARI
 // ═══════════════════════════════════════════════════════════════
-
-// ─── Veri Tipi ──────────────────────────────────────────────
-interface Shipment {
-  id: string;
-  customer: string;
-  product: string;
-  quantity: number;
-  status: string;
-  warehouse: string;
-  carrier: string;
-  note: string;
-}
-
-// ─── Başlangıç Verileri ────────────────────────────────────
-const initialData: Shipment[] = [
-  {
-    id: "SHP-001",
-    customer: "Trendyol",
-    product: "Elektronik Aksesuar",
-    quantity: 250,
-    status: "shipped",
-    warehouse: "İstanbul-1",
-    carrier: "Aras Kargo",
-    note: "Ekspres teslimat",
-  },
-  {
-    id: "SHP-002",
-    customer: "Hepsiburada",
-    product: "Giyim Ürünleri",
-    quantity: 180,
-    status: "preparing",
-    warehouse: "İstanbul-2",
-    carrier: "Yurtiçi Kargo",
-    note: "",
-  },
-  {
-    id: "SHP-003",
-    customer: "Amazon TR",
-    product: "Kozmetik Set",
-    quantity: 420,
-    status: "delivered",
-    warehouse: "Ankara",
-    carrier: "MNG Kargo",
-    note: "Müşteri onayladı",
-  },
-  {
-    id: "SHP-004",
-    customer: "N11",
-    product: "Ev & Yaşam",
-    quantity: 95,
-    status: "preparing",
-    warehouse: "İzmir",
-    carrier: "PTT Kargo",
-    note: "Kırılacak ürün - dikkatli paketleme",
-  },
-  {
-    id: "SHP-005",
-    customer: "Trendyol",
-    product: "Spor Malzemeleri",
-    quantity: 310,
-    status: "shipped",
-    warehouse: "İstanbul-1",
-    carrier: "Sürat Kargo",
-    note: "",
-  },
-  {
-    id: "SHP-006",
-    customer: "GittiGidiyor",
-    product: "Kitap & Kırtasiye",
-    quantity: 540,
-    status: "delivered",
-    warehouse: "Bursa",
-    carrier: "Aras Kargo",
-    note: "Toplu sipariş",
-  },
-  {
-    id: "SHP-007",
-    customer: "Hepsiburada",
-    product: "Bebek Ürünleri",
-    quantity: 150,
-    status: "cancelled",
-    warehouse: "İstanbul-2",
-    carrier: "Yurtiçi Kargo",
-    note: "Müşteri iptal etti",
-  },
-  {
-    id: "SHP-008",
-    customer: "Amazon TR",
-    product: "Elektronik",
-    quantity: 75,
-    status: "preparing",
-    warehouse: "Ankara",
-    carrier: "MNG Kargo",
-    note: "Garanti belgesi eklenmeli",
-  },
-];
-
-// ─── Kolon Tanımları ────────────────────────────────────────
-const columns: ColumnDef<Shipment, unknown>[] = [
-  {
-    id: "id",
-    accessorKey: "id",
-    header: "Sipariş No",
-    size: 120,
-    minSize: 100,
-    meta: {
-      cell: { variant: "short-text" as const },
-    },
-  },
-  {
-    id: "customer",
-    accessorKey: "customer",
-    header: "Müşteri",
-    size: 150,
-    minSize: 120,
-    meta: {
-      cell: {
-        variant: "select" as const,
-        options: [
-          { label: "Trendyol", value: "Trendyol" },
-          { label: "Hepsiburada", value: "Hepsiburada" },
-          { label: "Amazon TR", value: "Amazon TR" },
-          { label: "N11", value: "N11" },
-          { label: "GittiGidiyor", value: "GittiGidiyor" },
-        ],
-      },
-    },
-  },
-  {
-    id: "product",
-    accessorKey: "product",
-    header: "Ürün",
-    size: 180,
-    minSize: 140,
-    meta: {
-      cell: { variant: "short-text" as const },
-    },
-  },
-  {
-    id: "quantity",
-    accessorKey: "quantity",
-    header: "Adet",
-    size: 100,
-    minSize: 80,
-    meta: {
-      cell: { variant: "number" as const, min: 0, step: 1 },
-    },
-  },
-  {
-    id: "status",
-    accessorKey: "status",
-    header: "Durum",
-    size: 140,
-    minSize: 120,
-    meta: {
-      cell: {
-        variant: "select" as const,
-        options: [
-          { label: "Hazırlanıyor", value: "preparing" },
-          { label: "Kargoda", value: "shipped" },
-          { label: "Teslim Edildi", value: "delivered" },
-          { label: "İptal", value: "cancelled" },
-        ],
-      },
-    },
-  },
-  {
-    id: "warehouse",
-    accessorKey: "warehouse",
-    header: "Depo",
-    size: 130,
-    minSize: 100,
-    meta: {
-      cell: {
-        variant: "select" as const,
-        options: [
-          { label: "İstanbul-1", value: "İstanbul-1" },
-          { label: "İstanbul-2", value: "İstanbul-2" },
-          { label: "Ankara", value: "Ankara" },
-          { label: "İzmir", value: "İzmir" },
-          { label: "Bursa", value: "Bursa" },
-        ],
-      },
-    },
-  },
-  {
-    id: "carrier",
-    accessorKey: "carrier",
-    header: "Kargo Firması",
-    size: 140,
-    minSize: 120,
-    meta: {
-      cell: {
-        variant: "select" as const,
-        options: [
-          { label: "Aras Kargo", value: "Aras Kargo" },
-          { label: "Yurtiçi Kargo", value: "Yurtiçi Kargo" },
-          { label: "MNG Kargo", value: "MNG Kargo" },
-          { label: "PTT Kargo", value: "PTT Kargo" },
-          { label: "Sürat Kargo", value: "Sürat Kargo" },
-        ],
-      },
-    },
-  },
-  {
-    id: "note",
-    accessorKey: "note",
-    header: "Not",
-    size: 200,
-    minSize: 150,
-    meta: {
-      cell: { variant: "short-text" as const },
-    },
-  },
-];
-
-// ─── İç bileşen: DirectionProvider içinde çalışır ───────────
-// useDataGrid içindeki useDirection() hook'u DirectionProvider
-// context'ine ihtiyaç duyar, bu yüzden ayrı bileşen gerekir
-function DataGridContent() {
-  const [data, setData] = React.useState<Shipment[]>(initialData);
-
-  const onRowAdd = React.useCallback(() => {
-    const newRow: Shipment = {
-      id: `SHP-${String(data.length + 1).padStart(3, "0")}`,
-      customer: "",
-      product: "",
-      quantity: 0,
-      status: "preparing",
-      warehouse: "",
-      carrier: "",
-      note: "",
-    };
-    setData((prev) => [...prev, newRow]);
-    return { rowIndex: data.length, columnId: "customer" };
-  }, [data.length]);
-
-  const onRowsDelete = React.useCallback((rows: Shipment[]) => {
-    const idsToDelete = new Set(rows.map((r) => r.id));
-    setData((prev) => prev.filter((row) => !idsToDelete.has(row.id)));
-  }, []);
-
-  const { table, ...dataGridProps } = useDataGrid({
-    data,
-    columns,
-    onDataChange: setData,
-    onRowAdd,
-    onRowsDelete,
-    getRowId: (row) => row.id,
-  });
-
-  // Durum istatistikleri
-  const statusCounts = React.useMemo(() => {
-    const counts = { preparing: 0, shipped: 0, delivered: 0, cancelled: 0 };
-    data.forEach((row) => {
-      if (row.status in counts) {
-        counts[row.status as keyof typeof counts]++;
-      }
-    });
-    return counts;
-  }, [data]);
-
-  return (
-    <>
-      {/* Durum Özeti */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        <Badge variant="outline">
-          Toplam: {data.length}
-        </Badge>
-        <Badge variant="default">
-          Hazırlanıyor: {statusCounts.preparing}
-        </Badge>
-        <Badge variant="secondary">
-          Kargoda: {statusCounts.shipped}
-        </Badge>
-        <Badge variant="outline" className="border-green-500 text-green-600">
-          Teslim: {statusCounts.delivered}
-        </Badge>
-        {statusCounts.cancelled > 0 && (
-          <Badge variant="destructive">
-            İptal: {statusCounts.cancelled}
-          </Badge>
-        )}
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Sevkiyat Takip</CardTitle>
-          <CardDescription>
-            Hücrelere tıklayarak düzenleyebilirsin. Alt satırdaki + butonu ile yeni satır
-            ekle. Satır seçip Delete ile sil.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <DataGrid table={table} {...dataGridProps} height={480} />
-        </CardContent>
-      </Card>
-    </>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════
-// BÖLÜM 2: Finansal Veri Tipleri DataGrid (Read-only)
-// Muhasebe formatı, sayısal, yüzde ve değişim göstergesi
-// ═══════════════════════════════════════════════════════════════
-
-interface FinancialRecord {
-  id: string;
-  warehouse: string;
-  revenue: number;
-  cost: number;
-  profit: number;
-  margin: number;
-  orders: number;
-  avgOrderValue: number;
-  change: number;
-}
-
-const financialData: FinancialRecord[] = [
-  { id: "WH-01", warehouse: "İstanbul-1", revenue: 4003000.56, cost: 2850000.30, profit: 1153000.26, margin: 28.8, orders: 12450, avgOrderValue: 321.53, change: 12.4 },
-  { id: "WH-02", warehouse: "İstanbul-2", revenue: 1548498.02, cost: 1620000.00, profit: -71501.98, margin: -4.6, orders: 8320, avgOrderValue: 186.12, change: -3.2 },
-  { id: "WH-03", warehouse: "Ankara", revenue: 2150000.00, cost: 1890000.45, profit: 259999.55, margin: 12.1, orders: 6780, avgOrderValue: 317.11, change: 5.7 },
-  { id: "WH-04", warehouse: "İzmir", revenue: 890450.80, cost: 945430.90, profit: -54980.10, margin: -6.2, orders: 3210, avgOrderValue: 277.40, change: -8.1 },
-  { id: "WH-05", warehouse: "Bursa", revenue: 1200000.45, cost: 980000.00, profit: 220000.45, margin: 18.3, orders: 4560, avgOrderValue: 263.16, change: 0.0 },
-  { id: "WH-06", warehouse: "Antalya", revenue: 650000.00, cost: 720000.00, profit: -70000.00, margin: -10.8, orders: 2100, avgOrderValue: 309.52, change: -15.3 },
-  { id: "WH-07", warehouse: "Gebze", revenue: 3200000.00, cost: 2400000.00, profit: 800000.00, margin: 25.0, orders: 9800, avgOrderValue: 326.53, change: 22.1 },
-  { id: "WH-08", warehouse: "Mersin", revenue: 480000.00, cost: 510000.00, profit: -30000.00, margin: -6.3, orders: 1850, avgOrderValue: 259.46, change: -2.5 },
-  { id: "WH-09", warehouse: "Kocaeli", revenue: 1750000.00, cost: 1320000.00, profit: 430000.00, margin: 24.6, orders: 5600, avgOrderValue: 312.50, change: 8.9 },
-  { id: "WH-10", warehouse: "Eskişehir", revenue: 320000.00, cost: 290000.00, profit: 30000.00, margin: 9.4, orders: 1200, avgOrderValue: 266.67, change: 1.2 },
-];
-
-// ─── Formatlama Yardımcıları ─────────────────────────────────
 
 /** Muhasebe formatı: $1,234,567.89 veya ($1,234.56) negatifler için */
 function formatAccounting(value: number): string {
@@ -375,7 +43,9 @@ function formatCurrency(value: number): string {
   });
 }
 
-// ─── Custom Cell Renderers ──────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// CUSTOM CELL RENDERERS — Finansal kolonlar için
+// ═══════════════════════════════════════════════════════════════
 
 /** Muhasebe hücresi — negatifler parantezli ve kırmızı */
 function AccountingCell({ getValue }: CellContext<FinancialRecord, unknown>) {
@@ -457,6 +127,57 @@ function ChangeCell({ getValue }: CellContext<FinancialRecord, unknown>) {
   );
 }
 
+// ═══════════════════════════════════════════════════════════════
+// BÖLÜM 1: Finansal Veri Tipleri DataGrid (Tam özellikli)
+// ═══════════════════════════════════════════════════════════════
+
+interface FinancialRecord {
+  id: string;
+  warehouse: string;
+  status: string;
+  revenue: number;
+  cost: number;
+  profit: number;
+  margin: number;
+  orders: number;
+  avgOrderValue: number;
+  change: number;
+  note: string;
+}
+
+const warehouseOptions = [
+  { label: "İstanbul-1", value: "İstanbul-1" },
+  { label: "İstanbul-2", value: "İstanbul-2" },
+  { label: "Ankara", value: "Ankara" },
+  { label: "İzmir", value: "İzmir" },
+  { label: "Bursa", value: "Bursa" },
+  { label: "Antalya", value: "Antalya" },
+  { label: "Gebze", value: "Gebze" },
+  { label: "Mersin", value: "Mersin" },
+  { label: "Kocaeli", value: "Kocaeli" },
+  { label: "Eskişehir", value: "Eskişehir" },
+];
+
+const financialStatusOptions = [
+  { label: "Aktif", value: "active" },
+  { label: "Hedef Üstü", value: "above-target" },
+  { label: "Hedef Altı", value: "below-target" },
+  { label: "İnceleniyor", value: "review" },
+];
+
+const financialData: FinancialRecord[] = [
+  { id: "WH-01", warehouse: "İstanbul-1", status: "above-target", revenue: 4003000.56, cost: 2850000.30, profit: 1153000.26, margin: 28.8, orders: 12450, avgOrderValue: 321.53, change: 12.4, note: "En yüksek hacimli depo" },
+  { id: "WH-02", warehouse: "İstanbul-2", status: "below-target", revenue: 1548498.02, cost: 1620000.00, profit: -71501.98, margin: -4.6, orders: 8320, avgOrderValue: 186.12, change: -3.2, note: "Maliyet optimizasyonu gerekli" },
+  { id: "WH-03", warehouse: "Ankara", status: "active", revenue: 2150000.00, cost: 1890000.45, profit: 259999.55, margin: 12.1, orders: 6780, avgOrderValue: 317.11, change: 5.7, note: "" },
+  { id: "WH-04", warehouse: "İzmir", status: "review", revenue: 890450.80, cost: 945430.90, profit: -54980.10, margin: -6.2, orders: 3210, avgOrderValue: 277.40, change: -8.1, note: "Kapasite artırımı planlanıyor" },
+  { id: "WH-05", warehouse: "Bursa", status: "active", revenue: 1200000.45, cost: 980000.00, profit: 220000.45, margin: 18.3, orders: 4560, avgOrderValue: 263.16, change: 0.0, note: "" },
+  { id: "WH-06", warehouse: "Antalya", status: "below-target", revenue: 650000.00, cost: 720000.00, profit: -70000.00, margin: -10.8, orders: 2100, avgOrderValue: 309.52, change: -15.3, note: "Sezonluk düşüş" },
+  { id: "WH-07", warehouse: "Gebze", status: "above-target", revenue: 3200000.00, cost: 2400000.00, profit: 800000.00, margin: 25.0, orders: 9800, avgOrderValue: 326.53, change: 22.1, note: "Yeni müşteri kazanımı" },
+  { id: "WH-08", warehouse: "Mersin", status: "review", revenue: 480000.00, cost: 510000.00, profit: -30000.00, margin: -6.3, orders: 1850, avgOrderValue: 259.46, change: -2.5, note: "Liman operasyonları inceleniyor" },
+  { id: "WH-09", warehouse: "Kocaeli", status: "above-target", revenue: 1750000.00, cost: 1320000.00, profit: 430000.00, margin: 24.6, orders: 5600, avgOrderValue: 312.50, change: 8.9, note: "" },
+  { id: "WH-10", warehouse: "Eskişehir", status: "active", revenue: 320000.00, cost: 290000.00, profit: 30000.00, margin: 9.4, orders: 1200, avgOrderValue: 266.67, change: 1.2, note: "Yeni açılan depo" },
+];
+
 // ─── Finansal Kolon Tanımları ────────────────────────────────
 const financialColumns: ColumnDef<FinancialRecord, unknown>[] = [
   {
@@ -465,7 +186,25 @@ const financialColumns: ColumnDef<FinancialRecord, unknown>[] = [
     header: "Depo",
     size: 130,
     minSize: 100,
-    meta: { cell: { variant: "short-text" as const } },
+    meta: {
+      cell: {
+        variant: "select" as const,
+        options: warehouseOptions,
+      },
+    },
+  },
+  {
+    id: "status",
+    accessorKey: "status",
+    header: "Durum",
+    size: 130,
+    minSize: 110,
+    meta: {
+      cell: {
+        variant: "select" as const,
+        options: financialStatusOptions,
+      },
+    },
   },
   {
     id: "revenue",
@@ -523,14 +262,50 @@ const financialColumns: ColumnDef<FinancialRecord, unknown>[] = [
     size: 140,
     minSize: 120,
   },
+  {
+    id: "note",
+    accessorKey: "note",
+    header: "Not",
+    size: 220,
+    minSize: 150,
+    meta: {
+      cell: { variant: "short-text" as const },
+    },
+  },
 ];
 
 function FinancialDataGridContent() {
-  const [data] = React.useState<FinancialRecord[]>(financialData);
+  const [data, setData] = React.useState<FinancialRecord[]>(financialData);
+
+  const onRowAdd = React.useCallback(() => {
+    const newRow: FinancialRecord = {
+      id: `WH-${String(data.length + 1).padStart(2, "0")}`,
+      warehouse: "",
+      status: "active",
+      revenue: 0,
+      cost: 0,
+      profit: 0,
+      margin: 0,
+      orders: 0,
+      avgOrderValue: 0,
+      change: 0,
+      note: "",
+    };
+    setData((prev) => [...prev, newRow]);
+    return { rowIndex: data.length, columnId: "warehouse" };
+  }, [data.length]);
+
+  const onRowsDelete = React.useCallback((rows: FinancialRecord[]) => {
+    const idsToDelete = new Set(rows.map((r) => r.id));
+    setData((prev) => prev.filter((row) => !idsToDelete.has(row.id)));
+  }, []);
 
   const { table, ...dataGridProps } = useDataGrid({
     data,
     columns: financialColumns,
+    onDataChange: setData,
+    onRowAdd,
+    onRowsDelete,
     getRowId: (row) => row.id,
   });
 
@@ -546,44 +321,8 @@ function FinancialDataGridContent() {
 
   return (
     <>
-      <div className="mb-4 flex flex-wrap gap-2">
-        <Badge variant="outline" className="font-mono tabular-nums">
-          Toplam Gelir: ${(totals.totalRevenue / 1_000_000).toFixed(1)}M
-        </Badge>
-        <Badge
-          variant="outline"
-          className={cn(
-            "font-mono tabular-nums",
-            totals.totalProfit >= 0
-              ? "border-emerald-500 text-emerald-600"
-              : "border-red-500 text-red-600"
-          )}
-        >
-          Net Kâr: ${(totals.totalProfit / 1_000_000).toFixed(1)}M
-        </Badge>
-        <Badge variant="secondary" className="font-mono tabular-nums">
-          Sipariş: {formatNumeric(totals.totalOrders)}
-        </Badge>
-        <Badge variant="outline" className="border-emerald-500 text-emerald-600">
-          Kârlı: {totals.profitableCount}/{data.length} depo
-        </Badge>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Depo Finansal Performans</CardTitle>
-          <CardDescription>
-            Muhasebe formatı: negatif değerler parantez içinde kırmızı renkte gösterilir.
-            Marj ve değişim kolonları yeşil/kırmızı renk kodlaması kullanır.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <DataGrid table={table} {...dataGridProps} height={440} />
-        </CardContent>
-      </Card>
-
-      {/* Format Referans Kartları */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Format Referans Kartları — üstte */}
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium">Muhasebe Formatı</CardTitle>
@@ -664,6 +403,259 @@ function FinancialDataGridContent() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Özet Badge'leri */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        <Badge variant="outline" className="font-mono tabular-nums">
+          Toplam Gelir: ${(totals.totalRevenue / 1_000_000).toFixed(1)}M
+        </Badge>
+        <Badge
+          variant="outline"
+          className={cn(
+            "font-mono tabular-nums",
+            totals.totalProfit >= 0
+              ? "border-emerald-500 text-emerald-600"
+              : "border-red-500 text-red-600"
+          )}
+        >
+          Net Kâr: ${(totals.totalProfit / 1_000_000).toFixed(1)}M
+        </Badge>
+        <Badge variant="secondary" className="font-mono tabular-nums">
+          Sipariş: {formatNumeric(totals.totalOrders)}
+        </Badge>
+        <Badge variant="outline" className="border-emerald-500 text-emerald-600">
+          Kârlı: {totals.profitableCount}/{data.length} depo
+        </Badge>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Depo Finansal Performans</CardTitle>
+          <CardDescription>
+            Depo ve durum kolonlarını tıklayarak düzenle. Satır seç + Delete ile sil.
+            Alt satırdaki + butonu ile yeni depo ekle. Finansal kolonlar muhasebe formatında gösterilir.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <DataGrid table={table} {...dataGridProps} height={440} />
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BÖLÜM 2: Sevkiyat Takip DataGrid (Düzenlenebilir)
+// ═══════════════════════════════════════════════════════════════
+
+interface Shipment {
+  id: string;
+  customer: string;
+  product: string;
+  quantity: number;
+  status: string;
+  warehouse: string;
+  carrier: string;
+  note: string;
+}
+
+const initialData: Shipment[] = [
+  { id: "SHP-001", customer: "Trendyol", product: "Elektronik Aksesuar", quantity: 250, status: "shipped", warehouse: "İstanbul-1", carrier: "Aras Kargo", note: "Ekspres teslimat" },
+  { id: "SHP-002", customer: "Hepsiburada", product: "Giyim Ürünleri", quantity: 180, status: "preparing", warehouse: "İstanbul-2", carrier: "Yurtiçi Kargo", note: "" },
+  { id: "SHP-003", customer: "Amazon TR", product: "Kozmetik Set", quantity: 420, status: "delivered", warehouse: "Ankara", carrier: "MNG Kargo", note: "Müşteri onayladı" },
+  { id: "SHP-004", customer: "N11", product: "Ev & Yaşam", quantity: 95, status: "preparing", warehouse: "İzmir", carrier: "PTT Kargo", note: "Kırılacak ürün - dikkatli paketleme" },
+  { id: "SHP-005", customer: "Trendyol", product: "Spor Malzemeleri", quantity: 310, status: "shipped", warehouse: "İstanbul-1", carrier: "Sürat Kargo", note: "" },
+  { id: "SHP-006", customer: "GittiGidiyor", product: "Kitap & Kırtasiye", quantity: 540, status: "delivered", warehouse: "Bursa", carrier: "Aras Kargo", note: "Toplu sipariş" },
+  { id: "SHP-007", customer: "Hepsiburada", product: "Bebek Ürünleri", quantity: 150, status: "cancelled", warehouse: "İstanbul-2", carrier: "Yurtiçi Kargo", note: "Müşteri iptal etti" },
+  { id: "SHP-008", customer: "Amazon TR", product: "Elektronik", quantity: 75, status: "preparing", warehouse: "Ankara", carrier: "MNG Kargo", note: "Garanti belgesi eklenmeli" },
+];
+
+const shipmentColumns: ColumnDef<Shipment, unknown>[] = [
+  {
+    id: "id",
+    accessorKey: "id",
+    header: "Sipariş No",
+    size: 120,
+    minSize: 100,
+    meta: { cell: { variant: "short-text" as const } },
+  },
+  {
+    id: "customer",
+    accessorKey: "customer",
+    header: "Müşteri",
+    size: 150,
+    minSize: 120,
+    meta: {
+      cell: {
+        variant: "select" as const,
+        options: [
+          { label: "Trendyol", value: "Trendyol" },
+          { label: "Hepsiburada", value: "Hepsiburada" },
+          { label: "Amazon TR", value: "Amazon TR" },
+          { label: "N11", value: "N11" },
+          { label: "GittiGidiyor", value: "GittiGidiyor" },
+        ],
+      },
+    },
+  },
+  {
+    id: "product",
+    accessorKey: "product",
+    header: "Ürün",
+    size: 180,
+    minSize: 140,
+    meta: { cell: { variant: "short-text" as const } },
+  },
+  {
+    id: "quantity",
+    accessorKey: "quantity",
+    header: "Adet",
+    size: 100,
+    minSize: 80,
+    meta: { cell: { variant: "number" as const, min: 0, step: 1 } },
+  },
+  {
+    id: "status",
+    accessorKey: "status",
+    header: "Durum",
+    size: 140,
+    minSize: 120,
+    meta: {
+      cell: {
+        variant: "select" as const,
+        options: [
+          { label: "Hazırlanıyor", value: "preparing" },
+          { label: "Kargoda", value: "shipped" },
+          { label: "Teslim Edildi", value: "delivered" },
+          { label: "İptal", value: "cancelled" },
+        ],
+      },
+    },
+  },
+  {
+    id: "warehouse",
+    accessorKey: "warehouse",
+    header: "Depo",
+    size: 130,
+    minSize: 100,
+    meta: {
+      cell: {
+        variant: "select" as const,
+        options: [
+          { label: "İstanbul-1", value: "İstanbul-1" },
+          { label: "İstanbul-2", value: "İstanbul-2" },
+          { label: "Ankara", value: "Ankara" },
+          { label: "İzmir", value: "İzmir" },
+          { label: "Bursa", value: "Bursa" },
+        ],
+      },
+    },
+  },
+  {
+    id: "carrier",
+    accessorKey: "carrier",
+    header: "Kargo Firması",
+    size: 140,
+    minSize: 120,
+    meta: {
+      cell: {
+        variant: "select" as const,
+        options: [
+          { label: "Aras Kargo", value: "Aras Kargo" },
+          { label: "Yurtiçi Kargo", value: "Yurtiçi Kargo" },
+          { label: "MNG Kargo", value: "MNG Kargo" },
+          { label: "PTT Kargo", value: "PTT Kargo" },
+          { label: "Sürat Kargo", value: "Sürat Kargo" },
+        ],
+      },
+    },
+  },
+  {
+    id: "note",
+    accessorKey: "note",
+    header: "Not",
+    size: 200,
+    minSize: 150,
+    meta: { cell: { variant: "short-text" as const } },
+  },
+];
+
+function ShipmentDataGridContent() {
+  const [data, setData] = React.useState<Shipment[]>(initialData);
+
+  const onRowAdd = React.useCallback(() => {
+    const newRow: Shipment = {
+      id: `SHP-${String(data.length + 1).padStart(3, "0")}`,
+      customer: "",
+      product: "",
+      quantity: 0,
+      status: "preparing",
+      warehouse: "",
+      carrier: "",
+      note: "",
+    };
+    setData((prev) => [...prev, newRow]);
+    return { rowIndex: data.length, columnId: "customer" };
+  }, [data.length]);
+
+  const onRowsDelete = React.useCallback((rows: Shipment[]) => {
+    const idsToDelete = new Set(rows.map((r) => r.id));
+    setData((prev) => prev.filter((row) => !idsToDelete.has(row.id)));
+  }, []);
+
+  const { table, ...dataGridProps } = useDataGrid({
+    data,
+    columns: shipmentColumns,
+    onDataChange: setData,
+    onRowAdd,
+    onRowsDelete,
+    getRowId: (row) => row.id,
+  });
+
+  const statusCounts = React.useMemo(() => {
+    const counts = { preparing: 0, shipped: 0, delivered: 0, cancelled: 0 };
+    data.forEach((row) => {
+      if (row.status in counts) {
+        counts[row.status as keyof typeof counts]++;
+      }
+    });
+    return counts;
+  }, [data]);
+
+  return (
+    <>
+      <div className="mb-4 flex flex-wrap gap-2">
+        <Badge variant="outline">
+          Toplam: {data.length}
+        </Badge>
+        <Badge variant="default">
+          Hazırlanıyor: {statusCounts.preparing}
+        </Badge>
+        <Badge variant="secondary">
+          Kargoda: {statusCounts.shipped}
+        </Badge>
+        <Badge variant="outline" className="border-green-500 text-green-600">
+          Teslim: {statusCounts.delivered}
+        </Badge>
+        {statusCounts.cancelled > 0 && (
+          <Badge variant="destructive">
+            İptal: {statusCounts.cancelled}
+          </Badge>
+        )}
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Sevkiyat Takip</CardTitle>
+          <CardDescription>
+            Hücrelere tıklayarak düzenleyebilirsin. Alt satırdaki + butonu ile yeni satır
+            ekle. Satır seçip Delete ile sil.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <DataGrid table={table} {...dataGridProps} height={480} />
+        </CardContent>
+      </Card>
     </>
   );
 }
@@ -679,18 +671,18 @@ export function DataGridExamplePage() {
         <div className="space-y-10">
           <div>
             <PageHeader
-              title="DataGrid Örneği"
-              description="DiceUI DataGrid - Excel benzeri düzenlenebilir tablo"
-            />
-            <DataGridContent />
-          </div>
-
-          <div>
-            <PageHeader
               title="Finansal Veri Tipleri"
               description="Muhasebe formatı, sayısal gösterim, yüzde ve değişim göstergeleri — enterprise seviyede veri formatlama"
             />
             <FinancialDataGridContent />
+          </div>
+
+          <div>
+            <PageHeader
+              title="Sevkiyat Takip"
+              description="DiceUI DataGrid - Excel benzeri düzenlenebilir tablo"
+            />
+            <ShipmentDataGridContent />
           </div>
         </div>
       </TooltipProvider>

@@ -44,7 +44,7 @@ function formatCurrency(value: number): string {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// CUSTOM CELL RENDERERS — Finansal kolonlar için
+// CUSTOM CELL RENDERERS — Finansal kolonlar için renk + format
 // ═══════════════════════════════════════════════════════════════
 
 /** Muhasebe hücresi — negatifler parantezli ve kırmızı */

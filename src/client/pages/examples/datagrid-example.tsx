@@ -325,42 +325,42 @@ function FinancialDataGridContent() {
     <>
       {/* Format Referans Kartları — MessageCard ile */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MessageCard className="bg-primary text-primary-foreground">
+        <MessageCard>
           <MessageCardHeading>Muhasebe Formatı</MessageCardHeading>
           <MessageCardParagraph>
             Negatifler parantez + kırmızı renk ile gösterilir. Mono font, sağa yaslı.
           </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold text-primary-foreground">$4,003,000.56</div>
-          <MessageCardAction variant="secondary">Formatı İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold">$4,003,000.56</div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard className="bg-primary text-primary-foreground">
+        <MessageCard>
           <MessageCardHeading>Sayısal Format</MessageCardHeading>
           <MessageCardParagraph>
             Binlik ayırıcı virgül. Sağa yaslı, mono font ile okunabilir gösterim.
           </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold text-primary-foreground">12,450</div>
-          <MessageCardAction variant="secondary">Formatı İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold">12,450</div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard className="bg-primary text-primary-foreground">
+        <MessageCard>
           <MessageCardHeading>Yüzde / Marj</MessageCardHeading>
           <MessageCardParagraph>
             Yeşil pozitif, kırmızı negatif. Negatifler parantez içinde gösterilir.
           </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold text-primary-foreground">%28.8</div>
-          <MessageCardAction variant="secondary">Formatı İncele</MessageCardAction>
+          <div className="font-mono tabular-nums text-2xl font-bold">%28.8</div>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
 
-        <MessageCard className="bg-primary text-primary-foreground">
+        <MessageCard>
           <MessageCardHeading>Değişim Göstergesi</MessageCardHeading>
           <MessageCardParagraph>
             Ok ikonu + renk kodu ile trend gösterimi. Artış ve düşüş ayrımı.
           </MessageCardParagraph>
-          <div className="flex items-center gap-2 text-2xl font-bold font-mono text-primary-foreground">
+          <div className="flex items-center gap-2 text-2xl font-bold font-mono">
             <TrendingUp className="h-5 w-5" /> +12.4%
           </div>
-          <MessageCardAction variant="secondary">Formatı İncele</MessageCardAction>
+          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
       </div>
 
@@ -628,7 +628,7 @@ export function DataGridExamplePage() {
   return (
     <DirectionProvider dir="ltr">
       <TooltipProvider>
-        <div className="space-y-10">
+        <div className="space-y-10 max-w-full overflow-x-hidden">
           <div>
             <PageHeader
               title="Finansal Veri Tipleri"

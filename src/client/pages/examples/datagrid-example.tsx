@@ -18,7 +18,6 @@ import {
   MessageCard,
   MessageCardHeading,
   MessageCardParagraph,
-  MessageCardAction,
 } from "@/components/ui/message-card";
 
 // ═══════════════════════════════════════════════════════════════
@@ -323,44 +322,76 @@ function FinancialDataGridContent() {
 
   return (
     <>
-      {/* Format Referans Kartları — MessageCard ile */}
+      {/* Format Referans Kartları — Tablodaki formatlama örnekleri */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MessageCard>
           <MessageCardHeading>Muhasebe Formatı</MessageCardHeading>
-          <MessageCardParagraph>
-            Negatifler parantez + kırmızı renk ile gösterilir. Mono font, sağa yaslı.
-          </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold">$4,003,000.56</div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardParagraph>Gelir, Gider, Kâr/Zarar kolonları</MessageCardParagraph>
+          <div className="space-y-1.5 mt-1">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Pozitif</span>
+              <span className="tabular-nums text-sm font-medium text-foreground">$4,003,000.56</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Negatif</span>
+              <span className="tabular-nums text-sm font-medium text-red-600 dark:text-red-400">($71,501.98)</span>
+            </div>
+          </div>
         </MessageCard>
 
         <MessageCard>
           <MessageCardHeading>Sayısal Format</MessageCardHeading>
-          <MessageCardParagraph>
-            Binlik ayırıcı virgül. Sağa yaslı, mono font ile okunabilir gösterim.
-          </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold">12,450</div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardParagraph>Sipariş ve Ort. Sipariş kolonları</MessageCardParagraph>
+          <div className="space-y-1.5 mt-1">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Sipariş</span>
+              <span className="tabular-nums text-sm font-medium">12,450</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Ort. Sipariş</span>
+              <span className="tabular-nums text-sm font-medium">₺321.53</span>
+            </div>
+          </div>
         </MessageCard>
 
         <MessageCard>
           <MessageCardHeading>Yüzde / Marj</MessageCardHeading>
-          <MessageCardParagraph>
-            Yeşil pozitif, kırmızı negatif. Negatifler parantez içinde gösterilir.
-          </MessageCardParagraph>
-          <div className="font-mono tabular-nums text-2xl font-bold">%28.8</div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
+          <MessageCardParagraph>Marj (%) kolonu</MessageCardParagraph>
+          <div className="space-y-1.5 mt-1">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Pozitif</span>
+              <span className="tabular-nums text-sm font-medium text-emerald-600 dark:text-emerald-400">%28.8</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Negatif</span>
+              <span className="tabular-nums text-sm font-medium text-red-600 dark:text-red-400">(%4.6)</span>
+            </div>
+          </div>
         </MessageCard>
 
         <MessageCard>
           <MessageCardHeading>Değişim Göstergesi</MessageCardHeading>
-          <MessageCardParagraph>
-            Ok ikonu + renk kodu ile trend gösterimi. Artış ve düşüş ayrımı.
-          </MessageCardParagraph>
-          <div className="flex items-center gap-2 text-2xl font-bold font-mono">
-            <TrendingUp className="h-5 w-5" /> +12.4%
+          <MessageCardParagraph>Aylık Değişim (%) kolonu</MessageCardParagraph>
+          <div className="space-y-1.5 mt-1">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Artış</span>
+              <span className="flex items-center gap-1 tabular-nums text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                <TrendingUp className="h-3.5 w-3.5" /> +12.4%
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Düşüş</span>
+              <span className="flex items-center gap-1 tabular-nums text-sm font-medium text-red-600 dark:text-red-400">
+                <TrendingDown className="h-3.5 w-3.5" /> -8.1%
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-muted-foreground">Sabit</span>
+              <span className="flex items-center gap-1 tabular-nums text-sm font-medium text-muted-foreground">
+                <Minus className="h-3.5 w-3.5" /> 0.0%
+              </span>
+            </div>
           </div>
-          <MessageCardAction>Formatı İncele</MessageCardAction>
         </MessageCard>
       </div>
 

@@ -25,9 +25,7 @@ export function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-3">
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary">
-            <img src="/OPLOG.png" alt="OPLOG" className="h-12 w-12" />
-          </div>
+          <img src="/OPLOG.png" alt="OPLOG" className="h-12 w-12" />
           <h1 className="text-2xl font-bold tracking-tight">OPLOG</h1>
           <p className="text-sm text-muted-foreground">
             Devam etmek için şirket hesabınızla giriş yapın

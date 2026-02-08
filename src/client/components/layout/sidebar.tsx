@@ -3,13 +3,7 @@
 // NavUser: sidebar-07 nav-user pattern ile kullanıcı menüsü
 
 import { Link, useLocation } from "react-router-dom";
-import {
-  Home,
-  FileText,
-  Table,
-  BarChart3,
-  Grid3x3,
-} from "lucide-react";
+import { Home, FileText, Table, BarChart3, Grid3x3 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -26,9 +20,7 @@ import {
 import { NavUser } from "@/components/nav-user";
 
 // ─── Navigasyon menü öğeleri ─────────────────────────────────
-const mainNav = [
-  { name: "Ana Sayfa", href: "/", icon: Home },
-];
+const mainNav = [{ name: "Ana Sayfa", href: "/", icon: Home }];
 
 const exampleNav = [
   { name: "Form Örneği", href: "/examples/form", icon: FileText },
@@ -48,16 +40,12 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link to="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <img
-                    src="/OPLOG.png"
-                    alt="OPLOG"
-                    className="size-5"
-                  />
-                </div>
+                <img src="/OPLOG.png" alt="OPLOG" className="size-8" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">OPLOG</span>
-                  <span className="truncate text-xs text-muted-foreground">App Builder</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    App Builder
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>

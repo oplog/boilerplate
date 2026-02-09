@@ -1,9 +1,8 @@
-// Sidebar bileşeni - shadcn/ui Sidebar pattern (sidebar-07)
+// Sidebar — FOX ürünü menüsü
 // Collapsible: icon modunda daraltılabilir, mobilde Sheet olarak açılır
-// NavUser: sidebar-07 nav-user pattern ile kullanıcı menüsü
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, FileText, Table, BarChart3, Grid3x3, PanelLeft, Activity } from "lucide-react";
+import { LayoutDashboard, Database, Workflow, Sparkles } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -19,16 +18,12 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "@/components/nav-user";
 
-// ─── Navigasyon menü öğeleri ─────────────────────────────────
-const mainNav = [{ name: "Ana Sayfa", href: "/", icon: Home }];
-
-const exampleNav = [
-  { name: "Form Örneği", href: "/examples/form", icon: FileText },
-  { name: "Tablo Örneği", href: "/examples/table", icon: Table },
-  { name: "Grafik Örneği", href: "/examples/chart", icon: BarChart3 },
-  { name: "DataGrid Örneği", href: "/examples/datagrid", icon: Grid3x3 },
-  { name: "Stats Örnekleri", href: "/examples/stats", icon: Activity },
-  { name: "Sidebar Örnekleri", href: "/examples/sidebar", icon: PanelLeft },
+// FOX menü — Ana Sayfa (özet) + 3 scope
+const menuNav = [
+  { name: "Ana Sayfa", href: "/", icon: LayoutDashboard },
+  { name: "Scope 1: Konsolidasyon", href: "/fox/scope1", icon: Database },
+  { name: "Scope 2: Operasyonlar", href: "/fox/scope2", icon: Workflow },
+  { name: "Scope 3: AI Zeka", href: "/fox/scope3", icon: Sparkles },
 ];
 
 export function AppSidebar() {
@@ -36,7 +31,6 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" variant="sidebar">
-      {/* ─── Logo / Başlık ─────────────────────────── */}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -44,9 +38,9 @@ export function AppSidebar() {
               <Link to="/">
                 <img src="/OPLOG.png" alt="OPLOG" className="size-8" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">OPLOG</span>
+                  <span className="truncate font-semibold">FOX</span>
                   <span className="truncate text-xs text-muted-foreground">
-                    App Builder
+                    Financial Operational eXcellence
                   </span>
                 </div>
               </Link>
@@ -55,39 +49,19 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      {/* ─── Navigasyon ────────────────────────────── */}
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Menü</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainNav.map((item) => (
+              {menuNav.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
-                    isActive={location.pathname === item.href}
-                    tooltip={item.name}
-                  >
-                    <Link to={item.href}>
-                      <item.icon />
-                      <span>{item.name}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Örnekler</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {exampleNav.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={location.pathname === item.href}
+                    isActive={
+                      location.pathname === item.href ||
+                      (item.href === "/" && location.pathname === "/fox")
+                    }
                     tooltip={item.name}
                   >
                     <Link to={item.href}>
@@ -102,7 +76,6 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      {/* ─── Kullanıcı menüsü ─────────────────────── */}
       <SidebarFooter>
         <NavUser />
       </SidebarFooter>

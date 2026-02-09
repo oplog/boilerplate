@@ -12,6 +12,13 @@
   "workers_dev": true,
   "observability": {
     "enabled": true
+  },
+  // Databricks vars — gerçek değerler .dev.vars dosyasında (gitignore'd)
+  // Production: wrangler secret put DATABRICKS_HOST / DATABRICKS_TOKEN / DATABRICKS_WAREHOUSE_ID
+  "vars": {
+    "DATABRICKS_HOST": "",
+    "DATABRICKS_TOKEN": "",
+    "DATABRICKS_WAREHOUSE_ID": ""
   }
   // D1 veritabanı gerekiyorsa:
   // "d1_databases": [

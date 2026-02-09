@@ -1,12 +1,9 @@
-                                                                                                                                            
-VITE_KINDE_CLIENT_ID=bd5a112f0c954c0cb47fe74e229c6c1a             
-VITE_KINDE_DOMAIN=https://oplog-nexus.eu.kinde.com                                                                                                                              
-VITE_KINDE_REDIRECT_URI=http://localhost:5173                     
-VITE_KINDE_LOGOUT_URI=http://localhost:5173/login
+# Cloudflare Workers Environment Variables
+# Bu dosyayı .dev.vars olarak kopyala ve kendi değerlerini gir
+# ASLA .dev.vars dosyasını commit etme!
 
+# Örnek API anahtarı
+# API_KEY=your-api-key-here
 
-Production (.env.production)
-VITE_KINDE_CLIENT_ID=bd5a112f0c954c0cb47fe74e229c6c1a
-VITE_KINDE_DOMAIN=https://oplog-nexus.eu.kinde.com
-VITE_KINDE_REDIRECT_URI=https://boilerplate.oplog.app
-VITE_KINDE_LOGOUT_URI=https://boilerplate.oplog.app/login
+# Örnek secret
+# AUTH_SECRET=your-secret-here

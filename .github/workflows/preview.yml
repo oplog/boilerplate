@@ -1,6 +1,6 @@
 # Pull Request Preview Deploy
-# PR açıldığında otomatik preview ortamı oluşturur
-# PR'ı merge etmeden önce değişiklikleri canlı test edebilirsiniz
+# PR acildiginda otomatik preview ortami olusturur
+# PR'i merge etmeden once degisiklikleri canli test edebilirsiniz
 
 name: Preview
 
@@ -17,17 +17,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: "20"
-          cache: "npm"
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: bun run build
 
       - name: Deploy Preview
         uses: cloudflare/wrangler-action@v3

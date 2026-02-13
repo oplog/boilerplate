@@ -42,62 +42,62 @@ Projede su shadcn/ui bilesenleri yukludur:
 ### shadcn/ui'den Bilesen Ekleme
 
 ```bash
-npx shadcn@latest add <bilesen-adi>
+bunx shadcn@latest add <bilesen-adi>
 ```
 
 ### Sik Kullanilan Bilesenler
 
 ```bash
 # Tarih secici
-npx shadcn@latest add calendar
-npx shadcn@latest add date-picker
+bunx shadcn@latest add calendar
+bunx shadcn@latest add date-picker
 
 # On/off anahtar
-npx shadcn@latest add switch
+bunx shadcn@latest add switch
 
 # Ilerleme cubugu
-npx shadcn@latest add progress
+bunx shadcn@latest add progress
 
 # Sayfa gezinme
-npx shadcn@latest add pagination
+bunx shadcn@latest add pagination
 
 # Araclik (hover bilgi)
-npx shadcn@latest add tooltip
+bunx shadcn@latest add tooltip
 
 # Goruntuleyici
-npx shadcn@latest add avatar
+bunx shadcn@latest add avatar
 
 # Onay kutusu
-npx shadcn@latest add checkbox
+bunx shadcn@latest add checkbox
 
 # Radio butonlari
-npx shadcn@latest add radio-group
+bunx shadcn@latest add radio-group
 
 # Slider
-npx shadcn@latest add slider
+bunx shadcn@latest add slider
 
 # Acilir/kapanir icerik
-npx shadcn@latest add collapsible
-npx shadcn@latest add accordion
+bunx shadcn@latest add collapsible
+bunx shadcn@latest add accordion
 
 # Komut paleti
-npx shadcn@latest add command
+bunx shadcn@latest add command
 
 # Uyari mesaji
-npx shadcn@latest add alert
-npx shadcn@latest add alert-dialog
+bunx shadcn@latest add alert
+bunx shadcn@latest add alert-dialog
 
 # Ekmek kirintisi navigasyonu
-npx shadcn@latest add breadcrumb
+bunx shadcn@latest add breadcrumb
 
 # Kaydirma alani
-npx shadcn@latest add scroll-area
+bunx shadcn@latest add scroll-area
 ```
 
 ### Birden Fazla Bilesen Ekleme
 
 ```bash
-npx shadcn@latest add switch checkbox radio-group tooltip
+bunx shadcn@latest add switch checkbox radio-group tooltip
 ```
 
 ---

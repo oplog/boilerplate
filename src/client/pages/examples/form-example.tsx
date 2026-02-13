@@ -1,10 +1,9 @@
-// Form örneği sayfası
-// shadcn/ui Form + React Hook Form + Zod validation
-// Tüm yaygın form alanı türlerini gösterir: input, select, textarea, checkbox, switch, radio, slider
-// Yeni form oluştururken bu dosyayı referans olarak kullanabilirsin
+// Form ornegi sayfasi
+// @tanstack/react-form + Zod validation
+// Tum yaygin form alani turlerini gosterir: input, select, textarea, checkbox, switch, radio, slider
+// Yeni form olustururken bu dosyayi referans olarak kullanabilirsin
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -28,44 +27,39 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import {
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+} from "@/components/ui/field";
 import { PageHeader } from "@/components/shared/page-header";
 
-// Form validation şeması
+// Form validation semasi
 const formSchema = z.object({
-  // Metin alanları
-  name: z.string().min(2, "İsim en az 2 karakter olmalı"),
-  email: z.string().email("Geçerli bir email adresi girin"),
+  // Metin alanlari
+  name: z.string().min(2, "Isim en az 2 karakter olmali"),
+  email: z.string().email("Gecerli bir email adresi girin"),
   phone: z
     .string()
-    .regex(/^(\+90|0)?[0-9]{10}$/, "Geçerli bir telefon numarası girin")
+    .regex(/^(\+90|0)?[0-9]{10}$/, "Gecerli bir telefon numarasi girin")
     .or(z.literal("")),
-  department: z.string().min(1, "Departman seçimi zorunlu"),
+  department: z.string().min(1, "Departman secimi zorunlu"),
   description: z.string().optional(),
 
-  // Seçim alanları
+  // Secim alanlari
   priority: z.enum(["low", "medium", "high"], {
-    required_error: "Öncelik seçimi zorunlu",
+    required_error: "Oncelik secimi zorunlu",
   }),
   notifications: z.boolean().default(true),
   terms: z.boolean().refine((val) => val === true, {
-    message: "Koşulları kabul etmeniz gerekiyor",
+    message: "Kosullari kabul etmeniz gerekiyor",
   }),
 
-  // Sayısal alan
+  // Sayisal alan
   satisfaction: z.number().min(0).max(10).default(5),
 });
-
-type FormValues = z.infer<typeof formSchema>;
 
 // Departman listesi
 const departments = [
@@ -74,143 +68,177 @@ const departments = [
   { value: "logistics", label: "Lojistik" },
   { value: "finance", label: "Finans" },
   { value: "it", label: "Bilgi Teknolojileri" },
-  { value: "hr", label: "İnsan Kaynakları" },
-  { value: "support", label: "Müşteri Destek" },
+  { value: "hr", label: "Insan Kaynaklari" },
+  { value: "support", label: "Musteri Destek" },
 ];
 
 export function FormExamplePage() {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
     defaultValues: {
       name: "",
       email: "",
       phone: "",
       department: "",
       description: "",
-      priority: "medium",
+      priority: "medium" as const,
       notifications: true,
       terms: false,
       satisfaction: 5,
     },
+    validators: {
+      onSubmit: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        const response = await fetch("/api/examples", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: value.name,
+            description: `${value.department} | ${value.priority} | ${value.email}`,
+            status: "active",
+          }),
+        });
+
+        if (!response.ok) throw new Error("Gonderim basarisiz");
+
+        toast.success("Form basariyla gonderildi!", {
+          description: `${value.name} kaydedildi.`,
+        });
+
+        form.reset();
+      } catch {
+        toast.error("Bir hata olustu", {
+          description: "Lutfen tekrar deneyin.",
+        });
+      }
+    },
   });
-
-  async function onSubmit(data: FormValues) {
-    try {
-      const response = await fetch("/api/examples", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          description: `${data.department} | ${data.priority} | ${data.email}`,
-          status: "active",
-        }),
-      });
-
-      if (!response.ok) throw new Error("Gönderim başarısız");
-
-      toast.success("Form başarıyla gönderildi!", {
-        description: `${data.name} kaydedildi.`,
-      });
-
-      form.reset();
-    } catch {
-      toast.error("Bir hata oluştu", {
-        description: "Lütfen tekrar deneyin.",
-      });
-    }
-  }
 
   return (
     <div>
       <PageHeader
-        title="Form Örneği"
-        description="Tüm form alanı türlerini gösteren kapsamlı form örneği"
+        title="Form Ornegi"
+        description="Tum form alani turlerini gosteren kapsamli form ornegi"
       />
 
       <Card className="max-w-2xl">
         <CardHeader>
           <CardTitle>Talep Formu</CardTitle>
           <CardDescription>
-            Input, Select, Textarea, Checkbox, Switch, Radio ve Slider alanlarını içerir
+            Input, Select, Textarea, Checkbox, Switch, Radio ve Slider alanlarini icerir
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* ─── Kişisel Bilgiler ─────────────────── */}
-              <div>
-                <h3 className="mb-3 text-sm font-medium">Kişisel Bilgiler</h3>
-                <div className="space-y-4">
-                  {/* İsim */}
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>İsim *</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Adınızı girin" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              form.handleSubmit();
+            }}
+            className="space-y-6"
+          >
+            {/* ─── Kisisel Bilgiler ─────────────────── */}
+            <div>
+              <h3 className="mb-3 text-sm font-medium">Kisisel Bilgiler</h3>
+              <div className="space-y-4">
+                {/* Isim */}
+                <form.Field name="name">
+                  {(field) => {
+                    const hasError =
+                      field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0;
+                    return (
+                      <Field data-invalid={hasError || undefined}>
+                        <FieldLabel htmlFor={field.name}>Isim *</FieldLabel>
+                        <Input
+                          id={field.name}
+                          placeholder="Adinizi girin"
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={hasError}
+                        />
+                        {hasError && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    );
+                  }}
+                </form.Field>
 
-                  {/* Email ve Telefon yan yana */}
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email *</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="email"
-                              placeholder="ornek@oplog.com"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                {/* Email ve Telefon yan yana */}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <form.Field name="email">
+                    {(field) => {
+                      const hasError =
+                        field.state.meta.isTouched &&
+                        field.state.meta.errors.length > 0;
+                      return (
+                        <Field data-invalid={hasError || undefined}>
+                          <FieldLabel htmlFor={field.name}>Email *</FieldLabel>
+                          <Input
+                            id={field.name}
+                            type="email"
+                            placeholder="ornek@oplog.com"
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={hasError}
+                          />
+                          {hasError && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </form.Field>
 
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Telefon</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="tel"
-                              placeholder="05XX XXX XX XX"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <form.Field name="phone">
+                    {(field) => {
+                      const hasError =
+                        field.state.meta.isTouched &&
+                        field.state.meta.errors.length > 0;
+                      return (
+                        <Field data-invalid={hasError || undefined}>
+                          <FieldLabel htmlFor={field.name}>
+                            Telefon
+                          </FieldLabel>
+                          <Input
+                            id={field.name}
+                            type="tel"
+                            placeholder="05XX XXX XX XX"
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={hasError}
+                          />
+                          {hasError && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      );
+                    }}
+                  </form.Field>
+                </div>
 
-                  {/* Departman (Select) */}
-                  <FormField
-                    control={form.control}
-                    name="department"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Departman *</FormLabel>
+                {/* Departman (Select) */}
+                <form.Field name="department">
+                  {(field) => {
+                    const hasError =
+                      field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0;
+                    return (
+                      <Field data-invalid={hasError || undefined}>
+                        <FieldLabel htmlFor={field.name}>
+                          Departman *
+                        </FieldLabel>
                         <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.state.value}
+                          onValueChange={(val) => field.handleChange(val)}
                         >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Departman seçin" />
-                            </SelectTrigger>
-                          </FormControl>
+                          <SelectTrigger id={field.name} onBlur={field.handleBlur}>
+                            <SelectValue placeholder="Departman secin" />
+                          </SelectTrigger>
                           <SelectContent>
                             {departments.map((dept) => (
                               <SelectItem key={dept.value} value={dept.value}>
@@ -219,189 +247,218 @@ export function FormExamplePage() {
                             ))}
                           </SelectContent>
                         </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                        {hasError && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    );
+                  }}
+                </form.Field>
               </div>
+            </div>
 
-              <Separator />
+            <Separator />
 
-              {/* ─── Talep Detayları ──────────────────── */}
-              <div>
-                <h3 className="mb-3 text-sm font-medium">Talep Detayları</h3>
-                <div className="space-y-4">
-                  {/* Öncelik (Radio Group) */}
-                  <FormField
-                    control={form.control}
-                    name="priority"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Öncelik *</FormLabel>
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="flex gap-4"
-                          >
-                            <FormItem className="flex items-center gap-2 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="low" />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                Düşük
-                              </FormLabel>
-                            </FormItem>
-                            <FormItem className="flex items-center gap-2 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="medium" />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                Orta
-                              </FormLabel>
-                            </FormItem>
-                            <FormItem className="flex items-center gap-2 space-y-0">
-                              <FormControl>
-                                <RadioGroupItem value="high" />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                Yüksek
-                              </FormLabel>
-                            </FormItem>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            {/* ─── Talep Detaylari ──────────────────── */}
+            <div>
+              <h3 className="mb-3 text-sm font-medium">Talep Detaylari</h3>
+              <div className="space-y-4">
+                {/* Oncelik (Radio Group) */}
+                <form.Field name="priority">
+                  {(field) => {
+                    const hasError =
+                      field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0;
+                    return (
+                      <Field data-invalid={hasError || undefined}>
+                        <FieldLabel>Oncelik *</FieldLabel>
+                        <RadioGroup
+                          value={field.state.value}
+                          onValueChange={field.handleChange}
+                          className="flex gap-4"
+                        >
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem value="low" id="priority-low" />
+                            <FieldLabel
+                              htmlFor="priority-low"
+                              className="font-normal"
+                            >
+                              Dusuk
+                            </FieldLabel>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem
+                              value="medium"
+                              id="priority-medium"
+                            />
+                            <FieldLabel
+                              htmlFor="priority-medium"
+                              className="font-normal"
+                            >
+                              Orta
+                            </FieldLabel>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <RadioGroupItem value="high" id="priority-high" />
+                            <FieldLabel
+                              htmlFor="priority-high"
+                              className="font-normal"
+                            >
+                              Yuksek
+                            </FieldLabel>
+                          </div>
+                        </RadioGroup>
+                        {hasError && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    );
+                  }}
+                </form.Field>
 
-                  {/* Açıklama (Textarea) */}
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Açıklama</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            placeholder="Talebinizi detaylı açıklayın..."
-                            rows={4}
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Ne kadar detay verirseniz o kadar hızlı çözüm üretilir.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                {/* Aciklama (Textarea) */}
+                <form.Field name="description">
+                  {(field) => {
+                    const hasError =
+                      field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0;
+                    return (
+                      <Field data-invalid={hasError || undefined}>
+                        <FieldLabel htmlFor={field.name}>Aciklama</FieldLabel>
+                        <Textarea
+                          id={field.name}
+                          placeholder="Talebinizi detayli aciklayin..."
+                          rows={4}
+                          value={field.state.value ?? ""}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={hasError}
+                        />
+                        <FieldDescription>
+                          Ne kadar detay verirseniz o kadar hizli cozum
+                          uretilir.
+                        </FieldDescription>
+                        {hasError && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    );
+                  }}
+                </form.Field>
 
-                  {/* Memnuniyet (Slider) */}
-                  <FormField
-                    control={form.control}
-                    name="satisfaction"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center justify-between">
-                          <FormLabel>Memnuniyet Puanı</FormLabel>
-                          <span className="text-sm font-medium">
-                            {field.value}/10
-                          </span>
-                        </div>
-                        <FormControl>
-                          <Slider
-                            min={0}
-                            max={10}
-                            step={1}
-                            value={[field.value]}
-                            onValueChange={([val]) => field.onChange(val)}
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Genel memnuniyet puanınızı seçin (0=çok kötü, 10=mükemmel)
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                {/* Memnuniyet (Slider) */}
+                <form.Field name="satisfaction">
+                  {(field) => (
+                    <Field>
+                      <div className="flex items-center justify-between">
+                        <FieldLabel>Memnuniyet Puani</FieldLabel>
+                        <span className="text-sm font-medium">
+                          {field.state.value}/10
+                        </span>
+                      </div>
+                      <Slider
+                        min={0}
+                        max={10}
+                        step={1}
+                        value={[field.state.value]}
+                        onValueChange={([val]) => field.handleChange(val)}
+                      />
+                      <FieldDescription>
+                        Genel memnuniyet puaninizi secin (0=cok kotu,
+                        10=mukemmel)
+                      </FieldDescription>
+                    </Field>
+                  )}
+                </form.Field>
               </div>
+            </div>
 
-              <Separator />
+            <Separator />
 
-              {/* ─── Tercihler ────────────────────────── */}
-              <div>
-                <h3 className="mb-3 text-sm font-medium">Tercihler</h3>
-                <div className="space-y-4">
-                  {/* Bildirimler (Switch) */}
-                  <FormField
-                    control={form.control}
-                    name="notifications"
-                    render={({ field }) => (
-                      <FormItem className="flex items-center justify-between rounded-lg border p-4">
-                        <div className="space-y-0.5">
-                          <FormLabel className="text-base">
-                            Email Bildirimleri
-                          </FormLabel>
-                          <FormDescription>
-                            Talep durumu değiştiğinde email al
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+            {/* ─── Tercihler ────────────────────────── */}
+            <div>
+              <h3 className="mb-3 text-sm font-medium">Tercihler</h3>
+              <div className="space-y-4">
+                {/* Bildirimler (Switch) */}
+                <form.Field name="notifications">
+                  {(field) => (
+                    <div className="flex items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="text-base"
+                        >
+                          Email Bildirimleri
+                        </FieldLabel>
+                        <FieldDescription>
+                          Talep durumu degistiginde email al
+                        </FieldDescription>
+                      </div>
+                      <Switch
+                        id={field.name}
+                        checked={field.state.value}
+                        onCheckedChange={field.handleChange}
+                      />
+                    </div>
+                  )}
+                </form.Field>
 
-                  {/* Koşullar (Checkbox) */}
-                  <FormField
-                    control={form.control}
-                    name="terms"
-                    render={({ field }) => (
-                      <FormItem className="flex items-start gap-3 space-y-0">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
+                {/* Kosullar (Checkbox) */}
+                <form.Field name="terms">
+                  {(field) => {
+                    const hasError =
+                      field.state.meta.isTouched &&
+                      field.state.meta.errors.length > 0;
+                    return (
+                      <Field
+                        data-invalid={hasError || undefined}
+                        orientation="horizontal"
+                        className="items-start gap-3"
+                      >
+                        <Checkbox
+                          id={field.name}
+                          checked={field.state.value}
+                          onCheckedChange={(c) => field.handleChange(!!c)}
+                        />
                         <div className="space-y-1 leading-none">
-                          <FormLabel>
-                            Kullanım koşullarını kabul ediyorum *
-                          </FormLabel>
-                          <FormDescription>
-                            Verileriniz güvenli şekilde saklanır ve sadece talep
-                            takibi için kullanılır.
-                          </FormDescription>
-                          <FormMessage />
+                          <FieldLabel htmlFor={field.name}>
+                            Kullanim kosullarini kabul ediyorum *
+                          </FieldLabel>
+                          <FieldDescription>
+                            Verileriniz guvenli sekilde saklanir ve sadece talep
+                            takibi icin kullanilir.
+                          </FieldDescription>
+                          {hasError && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
                         </div>
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                      </Field>
+                    );
+                  }}
+                </form.Field>
               </div>
+            </div>
 
-              {/* ─── Butonlar ─────────────────────────── */}
-              <div className="flex gap-3">
-                <Button type="submit" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Gönderiliyor..." : "Gönder"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => form.reset()}
-                >
-                  Temizle
-                </Button>
-              </div>
-            </form>
-          </Form>
+            {/* ─── Butonlar ─────────────────────────── */}
+            <div className="flex gap-3">
+              <form.Subscribe
+                selector={(s) => s.isSubmitting}
+              >
+                {(isSubmitting) => (
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Gonderiliyor..." : "Gonder"}
+                  </Button>
+                )}
+              </form.Subscribe>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => form.reset()}
+              >
+                Temizle
+              </Button>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>

@@ -18,7 +18,7 @@ D1, Cloudflare'in SQLite tabanli serverless SQL veritabanidir. Yapisal verileri 
 
 ```bash
 # Yeni veritabani olustur
-npx wrangler d1 create oplog-app-db
+bunx wrangler d1 create oplog-app-db
 ```
 
 Bu komut bir veritabani ID'si olusturur. Bu ID'yi kopyalayin.
@@ -87,10 +87,10 @@ Migration'i calistirin:
 
 ```bash
 # Yerel veritabaninda calistir (gelistirme)
-npx wrangler d1 execute oplog-app-db --local --file=./migrations/0001_create_tables.sql
+bunx wrangler d1 execute oplog-app-db --local --file=./migrations/0001_create_tables.sql
 
 # Uzak veritabaninda calistir (production)
-npx wrangler d1 execute oplog-app-db --remote --file=./migrations/0001_create_tables.sql
+bunx wrangler d1 execute oplog-app-db --remote --file=./migrations/0001_create_tables.sql
 ```
 
 ### 5. D1 Kullanim Ornekleri
@@ -184,7 +184,7 @@ KV, basit anahtar-deger verileri icin kullanilir. Cok hizli okuma, biraz gecikem
 ### 1. KV Namespace Olusturma
 
 ```bash
-npx wrangler kv namespace create KV
+bunx wrangler kv namespace create KV
 ```
 
 Cikti olarak namespace ID'si verilir.
@@ -296,7 +296,7 @@ R2, dosya depolamak icin kullanilir. Resimler, PDF'ler, CSV dosyalari ve diger d
 ### 1. R2 Bucket Olusturma
 
 ```bash
-npx wrangler r2 bucket create oplog-app-files
+bunx wrangler r2 bucket create oplog-app-files
 ```
 
 ### 2. wrangler.jsonc Yapilandirmasi
@@ -481,4 +481,4 @@ export type Env = {
 2. **SQL injection'a dikkat** - Her zaman parametreli sorgular kullan (`?` placeholder ile `.bind()`)
 3. **KV icin TTL kullan** - Gecici verilerde `expirationTtl` ayarla
 4. **R2 dosya boyutu** - Tek seferde max 5GB dosya yuklenebilir
-5. **Type generation** - `npm run cf-typegen` komutu Cloudflare binding type'larini otomatik olusturur
+5. **Type generation** - `bun run cf-typegen` komutu Cloudflare binding type'larini otomatik olusturur

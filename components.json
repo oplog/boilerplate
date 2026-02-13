@@ -19,7 +19,9 @@
     "hooks": "@/hooks"
   },
   "registries": {
+    "@oplog": "https://nexus-ui.oplog.io/r/{name}.json",
     "@diceui": "https://diceui.com/r/{name}.json",
-    "@blocks": "https://blocks.so/r/{name}.json"
+    "@blocks": "https://blocks.so/r/{name}.json",
+    "@hooks": "https://shadcn-hooks.vercel.app/r/{name}.json"
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "nexus-boilerplate",
+  "name": "oplog-app",
   "account_id": "a7399df770e8fc3f1d8db985f6fa449c",
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-04-01",

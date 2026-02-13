@@ -3,7 +3,22 @@
 // NavUser: sidebar-07 nav-user pattern ile kullanıcı menüsü
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, FileText, Table, BarChart3, Grid3x3, PanelLeft, Activity } from "lucide-react";
+import {
+  Home,
+  FileText,
+  Table,
+  BarChart3,
+  Grid3x3,
+  PanelLeft,
+  Activity,
+  LayoutDashboard,
+  ListChecks,
+  ClipboardEdit,
+  Eye,
+  Columns3,
+  TrendingUp,
+  Component,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +35,19 @@ import {
 import { NavUser } from "@/components/nav-user";
 
 // ─── Navigasyon menü öğeleri ─────────────────────────────────
-const mainNav = [{ name: "Ana Sayfa", href: "/", icon: Home }];
+const mainNav = [
+  { name: "Ana Sayfa", href: "/", icon: Home },
+  { name: "Bileşen Kataloğu", href: "/showcase", icon: Component },
+];
+
+const templateNav = [
+  { name: "Dashboard", href: "/templates/dashboard", icon: LayoutDashboard },
+  { name: "CRUD Tablo", href: "/templates/crud-table", icon: ListChecks },
+  { name: "Form", href: "/templates/form", icon: ClipboardEdit },
+  { name: "Detay", href: "/templates/detail", icon: Eye },
+  { name: "Kanban", href: "/templates/kanban", icon: Columns3 },
+  { name: "Rapor", href: "/templates/report", icon: TrendingUp },
+];
 
 const exampleNav = [
   { name: "Form Örneği", href: "/examples/form", icon: FileText },
@@ -62,6 +89,28 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNav.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={location.pathname === item.href}
+                    tooltip={item.name}
+                  >
+                    <Link to={item.href}>
+                      <item.icon />
+                      <span>{item.name}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Şablonlar</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {templateNav.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild

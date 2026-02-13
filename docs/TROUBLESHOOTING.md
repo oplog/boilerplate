@@ -23,7 +23,7 @@ Module not found: Error: Can't resolve '@/lib/utils'
 1. **Bagimliliklari tekrar yukleyin:**
    ```bash
    rm -rf node_modules
-   npm install
+   bun install
    ```
 
 2. **Dosyanin var oldugundan emin olun:**
@@ -32,7 +32,7 @@ Module not found: Error: Can't resolve '@/lib/utils'
 
 3. **shadcn/ui bileseni eksikse:**
    ```bash
-   npx shadcn@latest add button
+   bunx shadcn@latest add button
    ```
 
 4. **Import yolunu kontrol edin:**
@@ -65,7 +65,7 @@ Build failed with X errors
 
 1. **TypeScript hatalarini kontrol edin:**
    ```bash
-   npx tsc --noEmit
+   bunx tsc --noEmit
    ```
 
 2. **Yaygin TypeScript hatalari:**
@@ -94,7 +94,7 @@ Build failed with X errors
 3. **Cache temizleyin:**
    ```bash
    rm -rf node_modules/.vite
-   npm run dev
+   bun run dev
    ```
 
 ---
@@ -131,7 +131,7 @@ Error: Port 5173 is already in use
 
 2. **Farkli port kullanin:**
    ```bash
-   npm run dev -- --port 3000
+   bun run dev -- --port 3000
    ```
 
 ---
@@ -141,7 +141,7 @@ Error: Port 5173 is already in use
 ### Hata Mesaji
 
 ```
-npx shadcn@latest add dialog
+bunx shadcn@latest add dialog
 Error: Something went wrong...
 ```
 
@@ -157,12 +157,12 @@ Error: Something went wrong...
 
 3. **Eksik bagimliliklari yukleyin:**
    ```bash
-   npm install radix-ui
+   bun install radix-ui
    ```
 
 4. **Belirli bir surumle deneyin:**
    ```bash
-   npx shadcn@0.9.4 add dialog
+   bunx shadcn@0.9.4 add dialog
    ```
 
 ---
@@ -173,10 +173,10 @@ Error: Something went wrong...
 
 ```bash
 # Tekrar giris yapin
-npx wrangler login
+bunx wrangler login
 
 # Giris durumunu kontrol edin
-npx wrangler whoami
+bunx wrangler whoami
 ```
 
 ### Hata: "Script too large"
@@ -187,7 +187,7 @@ Error: Your Worker exceeded the size limit
 
 **Cozum:**
 - Kullanilmayan paketleri `package.json`'dan kaldirin
-- `npm prune` calistirin
+- `bun prune` calistirin
 - Build ciktisini kontrol edin: `ls -la dist/`
 
 ### Hata: "Binding not found"
@@ -200,8 +200,8 @@ Error: D1_ERROR: no such binding 'DB'
 1. `wrangler.jsonc` dosyasindaki binding yapilandirmasini kontrol edin
 2. Veritabaninin/KV namespace'in olusturulmus oldugundan emin olun:
    ```bash
-   npx wrangler d1 list
-   npx wrangler kv namespace list
+   bunx wrangler d1 list
+   bunx wrangler kv namespace list
    ```
 
 ### Hata: "Compatibility date"
@@ -295,7 +295,7 @@ Bu hata normalde olmamali cunku CORS middleware'i zaten aktif. Eger oluyorsa:
 
 Worker icinde yakalanmamis bir hata oldugunda bu mesaj gorulur.
 
-1. `npm run dev` ile gelistirme sunucusunu calistirin
+1. `bun run dev` ile gelistirme sunucusunu calistirin
 2. Terminal'deki hata mesajini okuyun
 3. `try/catch` bloklari ekleyin:
 
@@ -319,7 +319,7 @@ D1_ERROR: SQLITE_ERROR: no such table: users
 
 **Cozum:** Migration'i calistirin:
 ```bash
-npx wrangler d1 execute oplog-app-db --local --file=./migrations/0001_create_tables.sql
+bunx wrangler d1 execute oplog-app-db --local --file=./migrations/0001_create_tables.sql
 ```
 
 ---
@@ -334,7 +334,7 @@ Dosyayi kaydediyorsunuz ama tarayici guncellenmiyor:
 2. Vite cache'ini temizleyin:
    ```bash
    rm -rf node_modules/.vite
-   npm run dev
+   bun run dev
    ```
 3. Tarayicida hard refresh yapin: `Ctrl+Shift+R` (Windows) veya `Cmd+Shift+R` (macOS)
 
@@ -354,7 +354,7 @@ Dosyayi kaydediyorsunuz ama tarayici guncellenmiyor:
 1. `node_modules/` dizinini tekrar olusturun:
    ```bash
    rm -rf node_modules
-   npm install
+   bun install
    ```
 2. Tarayicida gereksiz extension'lari devre disi birakin
 3. Buyuk dosyalarin import grafiklerini kontrol edin
@@ -367,8 +367,8 @@ Dosyayi kaydediyorsunuz ama tarayici guncellenmiyor:
 2. **"Nuclear option"** - Her sey bozulduysa:
    ```bash
    rm -rf node_modules .wrangler dist
-   npm install
-   npm run dev
+   bun install
+   bun run dev
    ```
 3. **Claude Code'a sorun** - Hata mesajini Claude Code'a yapisitirin:
    ```
@@ -378,6 +378,6 @@ Dosyayi kaydediyorsunuz ama tarayici guncellenmiyor:
    ```bash
    git stash        # Degisiklikleri kaydet
    git checkout .    # Son commit'e don
-   npm run dev       # Test et
+   bun run dev       # Test et
    git stash pop     # Degisiklikleri geri getir (isterseniz)
    ```

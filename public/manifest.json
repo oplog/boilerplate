@@ -1,7 +1,8 @@
 {
   "name": "OPLOG App",
   "short_name": "OPLOG",
-  "description": "OPLOG App Builder - Claude Code ile uygulama geliştirme platformu",
+  "description": "OPLOG App Builder - Claude Code ile uygulama gelistirme platformu",
+  "id": "/",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -10,7 +11,19 @@
   "icons": [
     {
       "src": "/OPLOG.png",
-      "sizes": "any",
+      "sizes": "500x500",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/OPLOG.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/OPLOG.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     }

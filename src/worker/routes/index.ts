@@ -2,4 +2,5 @@
 // Yeni route dosyası oluşturduğunda buraya eklemeyi unutma
 
 export { default as health } from "./health";
+export { default as me } from "./me";
 export { default as examples } from "./examples";

@@ -33,7 +33,7 @@ Terminal (macOS) veya Command Prompt (Windows) ac ve su komutu calistir:
 node --version
 # v20.x.x veya uzeri cikmalir
 
-npm --version
+bun --version
 # 10.x.x veya uzeri cikmali
 ```
 
@@ -76,7 +76,7 @@ Claude Code, yapay zeka destekli bir kod yazma aracidir. Bu template ile birlikt
 
 ```bash
 # Claude Code'u global olarak yukle
-npm install -g @anthropic-ai/claude-code
+bun install -g @anthropic-ai/claude-code
 ```
 
 ### Dogrulama
@@ -119,7 +119,7 @@ cd oplog-boilerplate
 Projenin calismas icin gereken tum kutuphaneleri yukleyin:
 
 ```bash
-npm install
+bun install
 ```
 
 Bu komut `node_modules/` dizinini olusturur ve tum bagimliliklari indirir. Ilk seferde birkacc dakika surebilir.
@@ -129,7 +129,7 @@ Bu komut `node_modules/` dizinini olusturur ve tum bagimliliklari indirir. Ilk s
 ## 6. Gelistirme Sunucusunu Baslat
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 Bu komut calistiktan sonra terminalde su mesaji goreceksiniz:
@@ -198,13 +198,13 @@ Artik projeniz calisiyor! Sirayla su dokumanlari okuyabilirsiniz:
 
 ## Sikca Sorulan Sorular
 
-### `npm run dev` komutu calismadi, ne yapmaliyim?
+### `bun run dev` komutu calismadi, ne yapmaliyim?
 
 1. `node --version` ile Node.js surumuuzu kontrol edin (v20+ olmali)
-2. `npm install` komutunu tekrar calistirin
+2. `bun install` komutunu tekrar calistirin
 3. Baska bir terminal penceresinde ayni port kullanilmiyor oldugundan emin olun
 
-### `npm install` cok uzun suruyor
+### `bun install` cok uzun suruyor
 
 Ilk seferde birkacc dakika surmesi normaldir. Internet baglantinizi kontrol edin.
 
@@ -216,6 +216,6 @@ Ilk seferde birkacc dakika surmesi normaldir. Internet baglantinizi kontrol edin
 
 ### Claude Code calismiyor
 
-1. `npm install -g @anthropic-ai/claude-code` ile tekrar yukleyin
+1. `bun install -g @anthropic-ai/claude-code` ile tekrar yukleyin
 2. Terminal'i kapatip yeniden acin
 3. API anahtarinizin gecerli oldugundan emin olun

@@ -1,9 +1,9 @@
 # Cloudflare Workers Environment Variables
-# Bu dosyayı .dev.vars olarak kopyala ve kendi değerlerini gir
-# ASLA .dev.vars dosyasını commit etme!
+# Bu dosyayi .dev.vars olarak kopyala ve kendi degerlerini gir
+# ASLA .dev.vars dosyasini commit etme!
 
-# Örnek API anahtarı
-# API_KEY=your-api-key-here
-
-# Örnek secret
-# AUTH_SECRET=your-secret-here
+# Nexus Gateway (DIA/Databricks entegrasyonu icin — opsiyonel)
+# NEXUS_GATEWAY_URL=https://nexus-gateway.oplog.com
+# KINDE_M2M_CLIENT_ID=your-m2m-client-id
+# KINDE_M2M_CLIENT_SECRET=your-m2m-client-secret
+# KINDE_M2M_DOMAIN=https://oplog.kinde.com

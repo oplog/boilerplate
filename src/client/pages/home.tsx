@@ -50,7 +50,7 @@ const steps = [
     title: "3. Sonucu Gör",
     description:
       "Claude kodu yazar, dosyaları oluşturur. Tarayıcıda localhost'u aç, değişiklikleri anında gör.",
-    code: "npm run dev → localhost:5173",
+    code: "bun run dev → localhost:5173",
   },
   {
     icon: Rocket,
@@ -394,19 +394,19 @@ export function HomePage() {
             <div className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2">
               <span className="text-muted-foreground">Projeyi çalıştır</span>
               <code className="rounded bg-background px-2 py-0.5 text-xs">
-                npm run dev
+                bun run dev
               </code>
             </div>
             <div className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2">
               <span className="text-muted-foreground">Build al</span>
               <code className="rounded bg-background px-2 py-0.5 text-xs">
-                npm run build
+                bun run build
               </code>
             </div>
             <div className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2">
               <span className="text-muted-foreground">Deploy et</span>
               <code className="rounded bg-background px-2 py-0.5 text-xs">
-                npm run deploy
+                bun run deploy
               </code>
             </div>
             <div className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2">

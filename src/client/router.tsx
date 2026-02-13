@@ -1,11 +1,9 @@
-// React Router yapılandırması
-// Yeni sayfa eklerken bu dosyaya route tanımı eklemeyi unutma
-// /login hariç tüm route'lar AuthGate ile korunur
+// React Router yapilandirmasi
+// Yeni sayfa eklerken bu dosyaya route tanimi eklemeyi unutma
+// Auth: Cloudflare Zero Trust edge'de halleder, app icinde login sayfasi YOK
 
 import { createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "@/components/layout/root-layout";
-import { AuthGate } from "@/components/auth/auth-gate";
-import { LoginPage } from "@/pages/login";
 import { HomePage } from "@/pages/home";
 import { FormExamplePage } from "@/pages/examples/form-example";
 import { TableExamplePage } from "@/pages/examples/table-example";
@@ -14,8 +12,16 @@ import { DataGridExamplePage } from "@/pages/examples/datagrid-example";
 import { SidebarExamplePage } from "@/pages/examples/sidebar-example";
 import { SidebarPreviewPage } from "@/pages/examples/sidebar-preview";
 import { StatsExamplePage } from "@/pages/examples/stats-example";
+import { NotFoundPage } from "@/pages/not-found";
+import { ShowcasePage } from "@/pages/showcase";
+import { DashboardTemplatePage } from "@/pages/templates/dashboard-template";
+import { CrudTableTemplatePage } from "@/pages/templates/crud-table-template";
+import { FormTemplatePage } from "@/pages/templates/form-template";
+import { DetailTemplatePage } from "@/pages/templates/detail-template";
+import { KanbanTemplatePage } from "@/pages/templates/kanban-template";
+import { ReportTemplatePage } from "@/pages/templates/report-template";
 
-// Örnek sayfalar — hem ana layout hem sidebar preview'da kullanılır
+// Ornek sayfalar — hem ana layout hem sidebar preview'da kullanilir
 const exampleRoutes = [
   { path: "examples/form", element: <FormExamplePage /> },
   { path: "examples/table", element: <TableExamplePage /> },
@@ -24,32 +30,32 @@ const exampleRoutes = [
   { path: "examples/stats", element: <StatsExamplePage /> },
 ];
 
+// Sayfa sablonlari — kullanici isteklerine gore ozellestirilen referans sayfalar
+const templateRoutes = [
+  { path: "templates/dashboard", element: <DashboardTemplatePage /> },
+  { path: "templates/crud-table", element: <CrudTableTemplatePage /> },
+  { path: "templates/form", element: <FormTemplatePage /> },
+  { path: "templates/detail", element: <DetailTemplatePage /> },
+  { path: "templates/kanban", element: <KanbanTemplatePage /> },
+  { path: "templates/report", element: <ReportTemplatePage /> },
+];
+
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    element: (
-      <AuthGate>
-        <RootLayout />
-      </AuthGate>
-    ),
+    element: <RootLayout />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "/showcase", element: <ShowcasePage /> },
       ...exampleRoutes.map((r) => ({ ...r, path: `/${r.path}` })),
+      ...templateRoutes.map((r) => ({ ...r, path: `/${r.path}` })),
       { path: "/examples/sidebar", element: <SidebarExamplePage /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
-  // Sidebar önizleme — RootLayout dışında (SidebarProvider çakışmasını önler)
-  // Her sidebar varyantı tam ekran layout olarak çalışır, örnek sayfalar içinde navigasyon yapılabilir
+  // Sidebar onizleme — RootLayout disinda (SidebarProvider cakismasini onler)
   {
     path: "/preview/sidebar/:variant",
-    element: (
-      <AuthGate>
-        <SidebarPreviewPage />
-      </AuthGate>
-    ),
+    element: <SidebarPreviewPage />,
     children: [
       { index: true, element: <HomePage /> },
       ...exampleRoutes,

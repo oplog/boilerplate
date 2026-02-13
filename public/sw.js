@@ -1,12 +1,15 @@
 // Service Worker - PWA offline ve cache desteği
 // Bu dosya uygulamanın mobilde "kurulabilir" olmasını ve hızlı açılmasını sağlar
 
-const CACHE_NAME = "oplog-app-v1";
+const CACHE_NAME = "oplog-app-v2";
 
 // Cache'lenecek temel dosyalar
 const PRECACHE_URLS = [
   "/",
   "/OPLOG.png",
+  "/fonts/UberMoveText-Regular.woff2",
+  "/fonts/UberMoveText-Medium.woff2",
+  "/fonts/UberMoveText-Bold.woff2",
 ];
 
 // Service Worker kurulumu - temel dosyaları cache'le

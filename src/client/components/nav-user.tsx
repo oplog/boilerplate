@@ -1,8 +1,8 @@
-// Nav User - shadcn sidebar-07 pattern
-// Sidebar footer'da kullanıcı bilgisi ve çıkış menüsü
+// Nav User - Sidebar footer'da kullanici bilgisi
+// Cloudflare Zero Trust ile authenticate olan kullanicinin bilgisini gosterir
 
 import { ChevronsUpDown, LogOut } from "lucide-react";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import { useUser } from "@/hooks/use-user";
 import {
   Avatar,
   AvatarFallback,
@@ -24,11 +24,9 @@ import {
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { user, logout } = useKindeAuth();
+  const { user } = useUser();
 
-  const name = user?.given_name
-    ? `${user.given_name} ${user.family_name ?? ""}`.trim()
-    : null;
+  const name = user?.name ?? null;
   const email = user?.email ?? "";
   const initials = name
     ? name
@@ -76,17 +74,11 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                // Kinde localStorage token'larını temizle
-                Object.keys(localStorage).forEach((key) => {
-                  if (key.startsWith("@kinde")) localStorage.removeItem(key);
-                });
-                logout();
-              }}
-            >
-              <LogOut />
-              Çıkış Yap
+            <DropdownMenuItem asChild>
+              <a href="/.auth/logout">
+                <LogOut />
+                Cikis Yap
+              </a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

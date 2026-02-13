@@ -7,7 +7,7 @@ Bu rehber, uygulamayi Cloudflare Workers'a deploy etmenin adimlarini anlatir.
 ## On Kosullar
 
 - Node.js v20+ yuklu olmali
-- `npm install` calistirilmis olmali
+- `bun install` calistirilmis olmali
 - Cloudflare hesabi (ucretsiz plan yeterli)
 
 ---
@@ -27,7 +27,7 @@ Cloudflare Workers ucretsiz plan ile gunluk 100.000 istek yapilabilir. Cogu dahi
 Wrangler, Cloudflare'in CLI aracidir. Zaten projede yukludur.
 
 ```bash
-npx wrangler login
+bunx wrangler login
 ```
 
 Bu komut tarayicinizda Cloudflare giris sayfasini acar. Giris yapip "Allow" butonuna tiklayarak Wrangler'a yetki verin.
@@ -35,7 +35,7 @@ Bu komut tarayicinizda Cloudflare giris sayfasini acar. Giris yapip "Allow" buto
 ### Giris Dogrulama
 
 ```bash
-npx wrangler whoami
+bunx wrangler whoami
 ```
 
 Hesap bilgilerinizi gormelisiniz.
@@ -48,7 +48,7 @@ Hesap bilgilerinizi gormelisiniz.
 
 ```bash
 # Build ve deploy
-npm run deploy
+bun run deploy
 ```
 
 Bu komut asagidaki adimlari otomatik yapar:
@@ -68,7 +68,7 @@ Published oplog-app (X.XXs)
 Her degisiklikten sonra ayni komutu calistirin:
 
 ```bash
-npm run deploy
+bun run deploy
 ```
 
 ---
@@ -188,10 +188,10 @@ Wrangler CLI ile secret ekleyin:
 
 ```bash
 # Secret ekle
-npx wrangler secret put API_KEY
+bunx wrangler secret put API_KEY
 # Terminalde deger girmenizi isteyecek
 
-npx wrangler secret put AUTH_SECRET
+bunx wrangler secret put AUTH_SECRET
 ```
 
 Cloudflare Dashboard uzerinden de ekleyebilirsiniz:
@@ -246,10 +246,10 @@ Farkli ortamlar icin ayri Worker'lar olusturabilirsiniz.
 
 ```bash
 # Staging'e deploy
-npx wrangler deploy --env staging
+bunx wrangler deploy --env staging
 
 # Production'a deploy
-npx wrangler deploy --env production
+bunx wrangler deploy --env production
 ```
 
 ---
@@ -258,8 +258,8 @@ npx wrangler deploy --env production
 
 Deploy etmeden once su kontrolleri yapin:
 
-- [ ] `npm run build` hatasiz tamamlaniyor mu?
-- [ ] Gelistirme sunucusunda (`npm run dev`) her sey dogru calisiyor mu?
+- [ ] `bun run build` hatasiz tamamlaniyor mu?
+- [ ] Gelistirme sunucusunda (`bun run dev`) her sey dogru calisiyor mu?
 - [ ] `.dev.vars` dosyasi commit edilmemis mi?
 - [ ] `node_modules/` commit edilmemis mi?
 - [ ] Tum sayfalar mobilde dogru gorunuyor mu?
@@ -275,7 +275,7 @@ Deploy etmeden once su kontrolleri yapin:
 
 ```bash
 # Once build'i test edin
-npm run build
+bun run build
 ```
 
 Build hatasini duzeltin ve tekrar deploy edin.
@@ -284,7 +284,7 @@ Build hatasini duzeltin ve tekrar deploy edin.
 
 ```bash
 # Tekrar giris yapin
-npx wrangler login
+bunx wrangler login
 ```
 
 ### "Script too large"

@@ -105,6 +105,9 @@ oplog-boilerplate/
 │   │   │   ├── use-api.ts       # API veri cekme/gonderme hook'lari
 │   │   │   ├── use-user.ts      # Zero Trust kullanici bilgisi hook'u
 │   │   │   └── use-mobile.ts    # Mobil cihaz algilama hook'u
+│   │   ├── stores/              # Zustand state store'lari
+│   │   │   ├── app-store.ts     # Global uygulama state (bildirimler, UI)
+│   │   │   └── create-crud-store.ts  # Entity CRUD store factory
 │   │   ├── lib/                 # Yardimci fonksiyonlar
 │   │   │   ├── api-client.ts    # HTTP istemcisi (/api/... cagrilari)
 │   │   │   └── utils.ts         # cn() yardimci fonksiyonu
@@ -680,6 +683,92 @@ Gateway entegrasyonu SADECE backend'de yapilir. Frontend'den erisim YOKTUR.
 
 ---
 
+## Zustand State Yonetimi
+
+Projede Zustand 5 yukludur. Global state yonetimi icin kullan.
+
+### Hazir Store'lar
+
+| Store | Dosya | Aciklama |
+|-------|-------|----------|
+| `useAppStore` | `src/client/stores/app-store.ts` | Bildirimler, global UI state |
+| `createCrudStore` | `src/client/stores/create-crud-store.ts` | Entity CRUD store factory |
+
+### App Store Kullanimi
+
+```tsx
+import { useAppStore } from "@/stores/app-store";
+
+function MyComponent() {
+  const { notifications, addNotification, unreadCount } = useAppStore();
+
+  // Bildirim ekle
+  addNotification({ title: "Basarili", message: "Kayit eklendi", type: "success" });
+
+  // Okunmamis bildirim sayisi
+  const count = unreadCount();
+}
+```
+
+### CRUD Store Factory (Yeni Entity Icin)
+
+Kullanici "urun listesi yap", "musteri tablosu ekle" gibi isteklerde:
+
+```tsx
+// 1. Store olustur (tek satir)
+import { createCrudStore } from "@/stores/create-crud-store";
+
+type Product = { id: string; name: string; price: number; active: boolean };
+export const useProductStore = createCrudStore<Product>("products", { persist: true });
+
+// 2. Component'te kullan
+function ProductList() {
+  const { items, addItem, updateItem, removeItem, searchQuery, setSearchQuery } = useProductStore();
+
+  return (
+    <>
+      <Input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      {items.filter(p => p.name.includes(searchQuery)).map(product => (
+        <div key={product.id}>{product.name}</div>
+      ))}
+    </>
+  );
+}
+```
+
+### Ozel Store Yazma
+
+```tsx
+// src/client/stores/my-store.ts
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+interface MyState {
+  count: number;
+  increment: () => void;
+  reset: () => void;
+}
+
+export const useMyStore = create<MyState>()(
+  persist(
+    (set) => ({
+      count: 0,
+      increment: () => set((s) => ({ count: s.count + 1 })),
+      reset: () => set({ count: 0 }),
+    }),
+    { name: "nexus-my-store" }
+  )
+);
+```
+
+**ONEMLI KURALLAR:**
+- Store dosyalari `src/client/stores/` dizinine koy
+- Persist key'leri `nexus-` prefix'i ile baslat
+- Entity CRUD icin `createCrudStore` factory kullan — sifirdan YAZMA
+- TanStack Query (useApiQuery) ile birlikte kullanilabilir: API'den gelen veriyi store'a at
+
+---
+
 ## Ortam Degiskenleri
 
 - Gelistirme: `.dev.vars` dosyasi
@@ -725,19 +814,20 @@ Uygulama PWA olarak yapilandirilmistir.
 9. **@tanstack/react-form + Zod kullan** — baska form/validasyon kutuphanesi YASAK (react-hook-form KULLANMA)
 10. **Sonner toast kullan** — `alert()`, `window.confirm()` YASAK
 11. **useApiQuery/useApiMutation kullan** — raw `fetch` YASAK
+12. **Zustand kullan** — global state icin `useState` + prop drilling YASAK, entity CRUD icin `createCrudStore` factory kullan
 
 ### Stil ve Tema
-12. **Tema degiskenlerini kullan** — hardcoded renk YASAK (`bg-background`, `text-foreground` vs.)
-13. **Uber Move fontunu DEGISTIRME** — tek font, baska font EKLEME
-14. **Tailwind class kullan** — custom CSS dosyasi YAZMA
-15. **`var(--color-chart-1..5)` kullan** — chart renklerinde `hsl()` KULLANMA
+13. **Tema degiskenlerini kullan** — hardcoded renk YASAK (`bg-background`, `text-foreground` vs.)
+14. **Uber Move fontunu DEGISTIRME** — tek font, baska font EKLEME
+15. **Tailwind class kullan** — custom CSS dosyasi YAZMA
+16. **`var(--color-chart-1..5)` kullan** — chart renklerinde `hsl()` KULLANMA
 
 ### Auth ve Altyapi
-16. **Login sayfasi EKLEME** — Cloudflare Zero Trust hallediyor
-17. **next-themes KULLANMA** — `@/components/theme-provider` kullan
-18. **DIA/Databricks → SADECE nexus-gateway uzerinden**
-19. **Her degisiklikten sonra `bun run build` calistir**
-20. **Bun kullan** — `npm` ve `npx` YASAK, her yerde `bun` / `bunx` kullan
+17. **Login sayfasi EKLEME** — Cloudflare Zero Trust hallediyor
+18. **next-themes KULLANMA** — `@/components/theme-provider` kullan
+19. **DIA/Databricks → SADECE nexus-gateway uzerinden**
+20. **Her degisiklikten sonra `bun run build` calistir**
+21. **Bun kullan** — `npm` ve `npx` YASAK, her yerde `bun` / `bunx` kullan
 
 ---
 
